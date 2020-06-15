@@ -6,7 +6,7 @@ Note that this repository is in a pretty rough state; if you have any specific q
 - Spectre (and everything Spectre depends on)
 
 # Setup
-After you've got Spectre running (and on your path), setting up Shadow should be pretty simple, just:
+After you've got Spectre running (and on your `$PATH`), setting up Shadow should be pretty simple, just:
 ```
 $ git clone https://github.com/devloop0/shadow
 $ cd shadow/
