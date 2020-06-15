@@ -1,0 +1,10 @@
+datatype `a list = Nil | Cons of `a * `a list
+
+fun filter p Nil = Nil
+	| filter p (Cons (x, l)) = if p x then Cons (x, filter p l) else filter p l
+
+fun len Nil = 0
+	| len (Cons (_, l)) = 1 + len l
+
+val mylist = Cons (1, Cons (2, Cons (3, Nil)))
+val newlen = len mylist - len (filter (fn x => x = 1) mylist) 

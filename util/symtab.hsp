@@ -1,0 +1,25 @@
+import <"stdx/vector">
+
+namespace shadow { namespace util {
+
+struct symtab {
+	type stdx::vector::vector::vector* keys;
+	type stdx::vector::vector::vector* values;
+	fn bool(const byte*, const byte*) cmp;
+	type symtab* parent;
+	unsigned int key_size, value_size;
+	type stdx::vector::vector::vector* children;
+}
+
+func void init_symtab(type symtab* s, unsigned int ks, unsigned int vs,
+	fn bool(const byte*, const byte*) c,
+	type symtab* p);
+func void destroy_symtab(type symtab* s);
+
+func void symtab_clear(type symtab* s);
+func void symtab_add_child(type symtab* s, type symtab* c);
+func void symtab_set(type symtab* s, const byte* k, const byte* v);
+func byte* symtab_lookup(type symtab* s, const byte* k, bool rec);
+func unsigned int symtab_num_entries(type symtab* s);
+
+} } // namespace shadow::util

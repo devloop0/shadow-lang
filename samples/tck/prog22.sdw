@@ -1,0 +1,2 @@
+datatype `a List = Nil | Cons of `a * (`a List)
+fun length Nil = 0 | length (Cons (_, x)) = 1 + length x

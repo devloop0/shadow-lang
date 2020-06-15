@@ -1,0 +1,22 @@
+import "token.hsp"
+
+namespace shadow { namespace lex {
+
+struct buffer {
+	char* text;
+	char* file_name;
+
+	unsigned int pos;
+	unsigned int len;
+
+	unsigned int col_num;
+	unsigned int line_num;
+}
+
+func void init_buffer(type buffer* buf, char* file_name, char* text);
+func bool skip_whitespace(type buffer* buf);
+func bool skip_comment(type buffer* buf);
+func void advance_char(type buffer* buf);
+func type token* lex(type buffer* buf);
+
+} } // namespace shadow::lex

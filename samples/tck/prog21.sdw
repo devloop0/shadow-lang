@@ -1,0 +1,3 @@
+datatype `a List = Nil | Cons of `a * (`a List)
+fun f x = Cons (x, Cons (x, Nil))
+fun g x = Cons (x, Cons (x, Nil))

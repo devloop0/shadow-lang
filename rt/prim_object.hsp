@@ -1,0 +1,38 @@
+import "fwd.hsp"
+
+namespace shadow { namespace rt {
+
+namespace prim_kind {
+
+constexpr unsigned int INT = 0x0,
+	CHAR = 0x1,
+	STRING = 0x2,
+	REAL = 0x3,
+	UNIT = 0x4,
+	BOOL = 0x5;
+
+} // namespace prim_kind
+
+union prim_types {
+	int i;
+	char c;
+	char* s;
+	double d;
+	bool b;
+}
+
+struct prim_object {
+	unsigned int kind;
+	type prim_types which;
+}
+
+func type object* init_bool(bool b);
+func type object* init_int(int i);
+func type object* init_char(char c);
+func type object* init_unit();
+func type object* init_real(double d);
+func type object* init_string(char* s);
+
+func type object* copy_prim(type object* src);
+
+} } // namespace shadow::rt

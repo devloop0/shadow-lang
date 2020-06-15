@@ -1,0 +1,12 @@
+datatype `a list = Nil | Cons of `a * `a list
+datatype `a option = None | Some of `a
+
+fun map (f, Nil) = Nil
+	| map (f, (Cons (x, l))) = Cons (f x, map (f, l))
+
+fun reduce (F, Nil) = None
+	| reduce (F, Cons (a, Nil)) = Some a
+	| reduce (F, Cons (x, xs)) = F (Some x, reduce (F, xs))
+
+fun reduce2 f Nil v = v
+	| reduce2 f (Cons (a, y)) v = f (a, reduce2 f y v)

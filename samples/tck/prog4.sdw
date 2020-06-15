@@ -1,0 +1,5 @@
+fun (`a, `b) map f (init: `a) (l: `b) : `b = map f (f init) l
+fun id x = x
+fun not_id x = 2
+fun f () = map not_id 0 'a'
+fun g () = map id 'a' 0.0

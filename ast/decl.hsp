@@ -1,0 +1,66 @@
+import <"stdx/vector">
+
+import "fwd.hsp"
+import "../lex/token.hsp"
+
+namespace shadow { namespace ast {
+
+namespace decl_kind {
+
+constexpr unsigned int FUN = 0x0,
+	TYP = 0x1,
+	DATATYP = 0x2,
+	DATATYP_REPL = 0x3,
+	VAL = 0x4,
+	EFUN = 0x5;
+
+} // namespace decl_kind
+
+struct typ_decl {
+	type stdx::vector::vector::vector* vars;
+	type lex::token* ident;
+	type typ* ty;
+}
+
+struct datatyp_constructor {
+	type lex::token* ident;
+	type typ* ty;
+}
+
+struct datatyp_decl {
+	type stdx::vector::vector::vector* vars;
+	type lex::token* ident;
+	type stdx::vector::vector::vector* constructors;
+}
+
+struct datatyp_repl_decl {
+	type lex::token* name;
+	type stdx::vector::vector::vector* ident;
+}
+
+struct val_bind {
+	type ast::pat* p;
+	type ast::exp* e;
+}
+
+struct val_decl {
+	type lex::token* val_start, rec_present;
+	type stdx::vector::vector::vector* val_binds;
+	type stdx::vector::vector::vector* var_list;
+}
+
+union decl_types {
+	type fun* fun_decl;
+	type stdx::vector::vector::vector* ty_decls;
+	type stdx::vector::vector::vector* dataty_decls;
+	type datatyp_repl_decl* dataty_repl_decl;
+	type val_decl* vd;
+}
+
+struct decl {
+	unsigned int kind;
+	type decl_types which;
+}
+
+
+} } // namespace shadow::ast

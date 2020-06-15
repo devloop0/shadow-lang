@@ -1,0 +1,26 @@
+import <"stdx/vector">
+
+import "fwd.hsp"
+
+namespace shadow { namespace ast {
+
+namespace top_level_kind {
+
+constexpr unsigned int DECL = 0x0;
+
+} // namespace top_level_kind
+
+union top_level_types {
+	type decl* top_level_decl;
+}
+
+struct top_level {
+	unsigned int kind;
+	type top_level_types which;
+}
+
+struct prog {
+	type stdx::vector::vector::vector* top_level_constructs;
+}
+
+} } // namespace shadow::ast

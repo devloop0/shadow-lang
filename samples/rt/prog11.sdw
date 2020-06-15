@@ -1,0 +1,2 @@
+val (x, sdw) = ("Hello" ++ " " ++ "World!", "Shadow")
+val y = (x ++ " (From " ++ sdw ++ "!)", 1234 + 234)

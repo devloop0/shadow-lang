@@ -1,0 +1,4 @@
+type i = int
+datatype `a IntList = Nil | Cons of (i * `a) * `a IntList
+fun f x = Cons ((x, x), Nil)
+fun g x y = Cons ((x, y), Nil)

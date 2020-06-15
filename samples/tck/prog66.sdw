@@ -1,0 +1,9 @@
+datatype chess_piece = Rook | Knight | Bishop | King | Queen | Pawn
+
+fun piece2string Rook = "R"
+	| piece2string Knight = "N"
+	| piece2string Bishop = "B"
+	| piece2string King = "K"
+	| piece2string Queen = "Q"
+	| piece2string Pawn = ""
+

@@ -1,0 +1,9 @@
+datatype `a list = Nil | Cons of `a * `a list
+datatype `a option = None | Some of `a
+
+fun unwrap Nil = Nil
+	| unwrap (Cons (Some x, l)) = Cons (x, unwrap l)
+	| unwrap (Cons (None, _)) = Nil
+
+fun wrap Nil = Nil
+	| wrap (Cons (x, l)) = Cons (Some x, wrap l)

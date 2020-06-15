@@ -1,0 +1,8 @@
+fun int_to_real (i : int) = 0.0
+
+fun fact n = 
+	let fun loop (s, 0) = s
+		| loop (s, i) = loop (s *. (int_to_real i), i - 1)
+	in
+		loop (1.0, n)
+	end

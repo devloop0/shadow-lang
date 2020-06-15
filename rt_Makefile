@@ -1,0 +1,41 @@
+SP=$(HOME)/spectre/opt_build/spectre
+AS=/opt/arm_cross_compiler/bin/arm-linux-gnueabihf-as
+LD=/opt/arm_cross_compile/bin/arm-linux-gnueabihf-ld
+GUEST_AR=ar
+
+BUILD_DIR=rt_build
+ASM_DIR=$(BUILD_DIR)/asm
+O_DIR=$(BUILD_DIR)/o
+OUTPUT=$(BUILD_DIR)/shadow_rt.a
+
+FILES=$(shell find . -type f \( -wholename './rt/*.sp' -or -wholename './util/*.sp' \) -printf '%P\n')
+HEADERS=$(shell find . -type f \( -wholename './rt/*.hsp' -or -wholename './util/*.hsp' \) -printf '%P\n')
+RT_OBJECTS=$(patsubst %.sp, $(O_DIR)/%.o, $(subst /,!,$(FILES)))
+RT_ASSEMBLIES=$(patsubst %.sp, $(ASM_DIR)/%.s, $(subst /,!,$(FILES)))
+
+all: setup $(OUTPUT)
+
+setup:
+	mkdir -p $(ASM_DIR) $(O_DIR)
+
+.SECONDEXPANSION:
+$(RT_OBJECTS): $(O_DIR)/%.o: $(ASM_DIR)/%.s
+	$(AS) -mfloat-abi=hard -mfpu=vfp -c $^ -o $@
+
+.SECONDEXPANSION:
+$(RT_ASSEMBLIES): $(ASM_DIR)/%.s: ./$$(subst !,/,%.sp) $(HEADERS)
+	$(SP) $<
+	mv $(patsubst %.sp, %.s, $<) $@
+
+.SECONDEXPANSION:
+compile: setup $(RT_OBJECTS)
+
+$(OUTPUT): $(RT_OBJECTS)
+	$(GUEST_AR) rcs $@ $^
+
+.SECONDEXPANSION:
+link: $(RT_OBJECTS)
+	$(GUEST_AR) rcs $(OUTPUT) $^
+
+clean:
+	rm -rf $(BUILD_DIR)

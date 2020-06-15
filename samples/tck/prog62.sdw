@@ -1,0 +1,3 @@
+fun f {x as x1, y as y1} = x1 + y1
+fun g (x, y) = if x = y then "same" else "different"
+fun h (x as (y, _), _) = (x, (y, y))

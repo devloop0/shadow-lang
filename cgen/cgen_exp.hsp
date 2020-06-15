@@ -1,0 +1,10 @@
+import <"stdx/vector">
+
+namespace shadow { namespace cgen {
+
+func void cgen_exp_fun(type cgen_ctx* c, type cgen_data* cd, type stdx::vector::vector::vector* matches);
+func void cgen_exp_unary(type cgen_ctx* c, type cgen_data* cd, type ast::exp_unary* un);
+func void cgen_exp_if(type cgen_ctx* c, type cgen_data* cd, type ast::if_exp* iexp);
+func void cgen_exp_app(type cgen_ctx* c, type cgen_data* cd, type ast::exp_app* app);
+
+} } // namespace shadow::cgen

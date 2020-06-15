@@ -1,0 +1,4 @@
+datatype `a Option = None | Some of `a
+fun f None = None | f (Some x) = x
+fun g x = f (case x of None => None | _ => Some x)
+fun h x = f (case x of None => None | _ => x)

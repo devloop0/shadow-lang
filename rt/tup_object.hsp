@@ -1,0 +1,11 @@
+import <"stdx/vector">
+
+import "object.hsp"
+
+namespace shadow { namespace rt {
+
+func type object* init_tup(unsigned int num, ...);
+
+func type object* copy_tup(type object* o);
+
+} } // namespace shadow::rt

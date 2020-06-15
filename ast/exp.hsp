@@ -1,0 +1,173 @@
+import <"stdx/vector">
+
+import "../lex/token.hsp"
+import "fwd.hsp"
+
+namespace shadow { namespace ast {
+
+namespace constant_kind {
+
+constexpr unsigned int INT = 0x0,
+	REAL = 0x1,
+	CHAR = 0x2,
+	STRING = 0x3,
+	BOOL = 0x4;
+
+} // namespace constant_kind
+
+struct constant {
+	unsigned int kind;
+	type lex::token* which;
+}
+
+struct match {
+	type pat* p;
+	type exp* e;
+}
+
+namespace exp_kind {
+
+constexpr unsigned int CONSTANT = 0x0,
+	LET = 0x1,
+	IDENT = 0x2,
+	IF = 0x3,
+	CASE = 0x4,
+	TYP_ANNOT = 0x5,
+	APP = 0x6,
+	ZERO_TUPLE = 0x7,
+	BINARY = 0x8,
+	UNARY = 0x9,
+	CMP = 0xa,
+	TUPLE = 0xb,
+	SEQ = 0xc,
+	WHILE = 0xd,
+	FN = 0xe,
+	ROW = 0xf;
+
+} // namespace exp_kind
+
+struct row_mem_exp {
+	type lex::token* ident_tok;
+	char* ident;
+	type ast::exp* e;
+}
+
+struct while_exp {
+	type ast::exp* cond;
+	type ast::exp* body;
+}
+
+struct case_exp {
+	type exp* e;
+	type stdx::vector::vector::vector* matches;
+}
+
+struct let_exp {
+	type decl* dec;
+	type stdx::vector::vector::vector* exps;
+}
+
+struct if_exp {
+	type exp* cond;
+	type exp* true_path;
+	type exp* false_path;
+}
+
+struct exp_typ_annot {
+	type exp* e;
+	type typ* ty;
+}
+
+struct exp_app {
+	type exp* f;
+	type exp* a;
+}
+
+struct exp_unary {
+	type exp* e;
+	unsigned int kind;
+}
+
+namespace exp_unary_kind {
+
+constexpr unsigned int PLUS = 0x0,
+	PLUS_REAL = 0x1,
+	MINUS = 0x2,
+	MINUS_REAL = 0x3,
+	NOT = 0x4,
+	CMPL = 0x5;
+
+} // namespace exp_unary_kind
+
+namespace exp_binary_kind {
+
+constexpr unsigned int MULT = 0x0,
+	DIV = 0x1,
+	MOD = 0x2,
+	PLUS = 0x3,
+	MINUS = 0x4,
+	SHL = 0x5,
+	SHR = 0x6,
+	BAND = 0x7,
+	XOR = 0x8,
+	BOR = 0x9,
+	LAND = 0xa,
+	LOR = 0xb,
+	MULT_REAL = 0xc,
+	DIV_REAL = 0xd,
+	PLUS_REAL = 0xe,
+	MINUS_REAL = 0xf,
+	STRING_CONCAT = 0x10;
+
+} // namespace exp_binary_kind
+
+namespace exp_cmp_kind {
+
+constexpr unsigned int LE = 0x0,
+	LT = 0x1,
+	GE = 0x2,
+	GT = 0x3,
+	EQ = 0x4,
+	NE = 0x5,
+	LE_REAL = 0x6,
+	LT_REAL = 0x7,
+	GE_REAL = 0x8,
+	GT_REAL = 0x9;
+
+} // namespace exp_cmp_kind
+
+struct exp_cmp {
+	type stdx::vector::vector::vector* exps;
+	type stdx::vector::vector::vector* cmps;
+}
+
+struct exp_binary {
+	type exp* lhs;
+	type exp* rhs;
+	unsigned int kind;
+}
+
+union exp_types {
+	type constant* c;
+	type let_exp* lexp;
+	type if_exp* iexp;
+	type while_exp* wexp;
+	type stdx::vector::vector::vector* ident;
+	type stdx::vector::vector::vector* tup;
+	type stdx::vector::vector::vector* seq;
+	type stdx::vector::vector::vector* rmems;
+	type case_exp* cexp;
+	type exp_typ_annot* typ_annot;
+	type exp_app* app;
+	type exp_binary* bin;
+	type exp_unary* un;
+	type exp_cmp* cmp;
+	type stdx::vector::vector::vector* anon_fun;
+}
+
+struct exp {
+	unsigned int kind;
+	type exp_types which;
+}
+
+} } // namespace shadow::ast

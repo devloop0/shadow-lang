@@ -1,0 +1,4 @@
+datatype (`a, `b) tuplist = TupNil | TupCons of (`a * `b) * (`a, `b) tuplist
+
+fun map f g TupNil = TupNil
+	| map f g (TupCons ((x, y), l)) = TupCons (f (y x), map f g (g l))

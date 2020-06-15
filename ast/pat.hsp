@@ -1,0 +1,60 @@
+import <"stdx/vector">
+
+import "fwd.hsp"
+import "../lex/token.hsp"
+
+namespace shadow { namespace ast {
+
+struct pat_layered {
+	type lex::token* ident;
+	type ast::typ* t;
+	type ast::pat* p;
+}
+
+struct pat_row_mem {
+	type lex::token* ident_tok;
+	char* ident;
+	type ast::typ* t;
+	type ast::pat* p;
+	type lex::token* sep;
+}
+
+struct pat_typ_annot {
+	type pat* p;
+	type typ* t;
+}
+
+struct pat_construction {
+	type stdx::vector::vector::vector* idents;
+	type ast::pat* p;
+}
+
+union pat_types {
+	type constant* con;
+	type pat_layered* layered;
+	type stdx::vector::vector::vector* nested;
+	type stdx::vector::vector::vector* rmems;
+	type pat_typ_annot* typ_annot;
+	type pat_construction* pc;
+}
+
+namespace pat_kind {
+
+constexpr unsigned int CONSTANT = 0x0,
+	WILDCARD = 0x1,
+	IDENT = 0x2,
+	TUPLE = 0x3,
+	LIST = 0x4,
+	TYP_ANNOT = 0x5,
+	ZERO_TUPLE = 0x6,
+	CONSTRUCTION = 0x7,
+	ROW = 0x8,
+	LAYERED = 0x9;
+} // namespace pat_kind
+
+struct pat {
+	unsigned int kind;
+	type pat_types which;
+}
+
+} } // namespace shadow::ast

@@ -1,0 +1,5 @@
+datatype `a evenlist = Empty | EvenCons of `a * `a oddlist
+&& `a oddlist = One of `a | OddCons of `a * `a evenlist
+
+fun evenlength Empty = 0 | evenlength (EvenCons (_, ol)) = 1 + oddlength ol
+&& oddlength (One _) = 1 | oddlength (OddCons (_, el)) = 1 + evenlength el

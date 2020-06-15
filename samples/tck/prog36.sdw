@@ -1,0 +1,7 @@
+datatype `a tree = Empty | Node of `a * `a forest
+&& `a forest = Nil | Cons of `a tree * `a forest
+
+fun size_tree Empty = 0
+	| size_tree (Node (_, f)) = 1 + size_forest f
+&& size_forest Nil = 0
+	| size_forest (Cons (t, f)) = size_tree t + size_forest f

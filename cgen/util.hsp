@@ -1,0 +1,37 @@
+import "../ast/fwd.hsp"
+import "cgen.hsp"
+
+import <"stdx/vector">
+import <"stdx/string">
+
+namespace shadow { namespace cgen {
+
+func type stdx::vector::vector::vector* collect_top_level_pat_idents(
+	type cgen_ctx* c, type ast::pat* p);
+
+func void init_cgen_data(type cgen_data* cd);
+
+func void add_cgen_data(type cgen_data* pcd, type cgen_data* cd,
+	unsigned int bi, unsigned int mi);
+
+func char* itoa(int i);
+
+func type stdx::string::string::string* gen_temp(type cgen_ctx* c);
+func type stdx::string::string::string* gen_assign(type cgen_ctx* c,
+	type stdx::string::string::string* lhs,
+	type stdx::string::string::string* rhs);
+func type stdx::string::string::string* gen_copy(type cgen_ctx* c,
+	type stdx::string::string::string* lhs,
+	type stdx::string::string::string* rhs);
+func type stdx::string::string::string* gen_debug(type cgen_ctx* c, 
+	type stdx::string::string::string* exp);
+func type stdx::string::string::string* left_pad_string(type cgen_ctx* ctx,
+	unsigned int num, char c, type stdx::string::string::string* s);
+func void add_scope_st(type cgen_ctx* c, type cgen_data* cd, bool setup);
+func void add_all_strings(type cgen_ctx* c, type stdx::vector::vector::vector* vec,
+	type stdx::string::string::string** data);
+
+func void bind_pat_to_exp(type cgen_ctx* c, type cgen_data* cd,
+	type ast::pat* p);
+
+} } // namespace shadow::cgen

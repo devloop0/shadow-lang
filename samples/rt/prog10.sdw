@@ -1,0 +1,3 @@
+val (x, y, z) = ('c' : char, 'd', 'c': char)
+val (a, b, c) = ("slkdj": string, "slkdj", "slkdjs": string)
+val (t1, t2, t3, t4, t5) = ((x = y) : bool, x = z, a = b, b = c, ((b ++ "s") : string) = c)

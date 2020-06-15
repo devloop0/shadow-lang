@@ -1,0 +1,31 @@
+datatype choice = Rock | Paper | Scissors
+datatype outcome = Win | Lose | Tie
+
+fun outcome_to_string Win = "You won!"
+	| outcome_to_string Lose = "You lose!"
+	| outcome_to_string Tie = "Tie!"
+
+fun winner (Rock, Rock) = Tie
+	| winner (Paper, Paper) = Tie
+	| winner (Scissors, Scissors) = Tie
+	| winner (Rock, Paper) = Lose
+	| winner (Rock, Scissors) = Win
+	| winner (Paper, Rock) = Win
+	| winner (Paper, Scissors) = Lose
+	| winner (Scissors, Rock) = Lose
+	| winner (Scissors, Paper) = Win
+
+fun play (c1, c2) = outcome_to_string (winner (c1, c2))
+
+fun string_to_choice "r" = Rock
+	| string_to_choice "rock" = Rock
+	| string_to_choice "Rock" = Rock
+	| string_to_choice "p" = Paper
+	| string_to_choice "paper" = Paper
+	| string_to_choice "Paper" = Paper
+	| string_to_choice "s" = Scissors
+	| string_to_choice "scissors" = Scissors
+	| string_to_choice "Scissors" = Scissors
+
+val (c1, c2) = (Rock, Scissors)
+val result = play (c1, c2)

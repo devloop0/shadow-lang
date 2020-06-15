@@ -1,0 +1,11 @@
+fun apply_twice f x = f (f x)
+
+fun double x = 2 * x && square x = x *. x
+
+fun quad x = apply_twice double x && fourth x = apply_twice square x
+
+fun fourth2 x = 
+	let val square2 = fn y => y * y
+in
+	apply_twice square2 x
+end

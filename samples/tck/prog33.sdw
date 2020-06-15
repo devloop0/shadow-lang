@@ -1,0 +1,19 @@
+datatype `a list = Nil | Cons of `a * `a list
+
+fun list_rev l = let
+	fun loop r Nil = r
+	| loop r (Cons (l, ls)) = loop (Cons (l, r)) ls
+in
+	loop Nil l
+end
+
+fun merge lt (xs, ys) = let
+	fun loop (out, (Cons (x, xs)), (Cons (y, ys))) =
+		if lt (x, y) then loop (Cons (x, out), xs, Cons (y, ys))
+		else loop (Cons (y, out), Cons (x, xs), ys)
+	| loop (out, Cons (x, xs), Nil) = loop (Cons (x, out), xs, Nil)
+	| loop (out, Nil, Cons (y, ys)) = loop (Cons (y, out), Nil, ys)
+	| loop (out, Nil, Nil) = list_rev out
+in
+	loop (Nil, xs, ys)
+end

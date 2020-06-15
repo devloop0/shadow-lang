@@ -1,0 +1,5 @@
+fun f x y = y | f n m = n
+fun int_to_real (x: int) = 0.0
+fun string_to_real (x: string) = 0.0
+fun real_to_int (x: real) = 0
+fun test x y = real_to_int (f (int_to_real x) (string_to_real y))

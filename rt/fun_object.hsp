@@ -1,0 +1,14 @@
+import "../util/symtab.hsp"
+import "fwd.hsp"
+
+namespace shadow { namespace rt {
+
+struct fun_object {
+	type util::symtab* scope;
+	fn type object*(type util::symtab*, type object*) fun;
+}
+
+func type object* init_fun(type util::symtab* scope, fn type object*(type util::symtab*, type object*) fun);
+func type object* copy_fun(type object* o);
+
+} } // namespace shadow::rt

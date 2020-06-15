@@ -1,0 +1,2 @@
+val rec fact = fn x => if x = 0 then 1 else x * fact (x - 1)
+val (t5, t8, t10) = (fact 5, fact 8, fact 10)

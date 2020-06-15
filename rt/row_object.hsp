@@ -1,0 +1,18 @@
+import <"stdx/vector">
+
+import "fwd.hsp"
+
+namespace shadow { namespace rt {
+
+struct row_object {
+	type stdx::vector::vector::vector* keys;
+	type stdx::vector::vector::vector* values;
+}
+
+func type object* init_row(unsigned int num, ...);
+
+func type object* copy_row(type object* o);
+
+func type object* select_member(type object* r, char* k);
+
+} } // namespace shadow::rt

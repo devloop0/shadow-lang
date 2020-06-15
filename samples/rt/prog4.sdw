@@ -1,0 +1,3 @@
+val x = 10 - 3 << 4
+val y = x >> 2
+val z = (0x010 bitwise_or 0x001) & (0xfff0 ^ 0x0)

@@ -1,0 +1,34 @@
+import <"stdx/vector">
+
+import "../lex/lex.hsp"
+import "../lex/token.hsp"
+
+import "../ast/ast.hsp"
+
+namespace shadow { namespace parse {
+
+struct parser {
+	type lex::buffer* buf;
+	unsigned int pos;
+	type stdx::vector::vector::vector* tokens;
+}
+
+namespace internal {
+
+func type lex::token* maybe_lex(type parser* p);
+
+} // namespace internal
+
+func void init_parser(type parser* p, type lex::buffer* b);
+func void destroy_parser(type parser* p);
+func void pop(type parser* p);
+func type lex::token* peek(type parser* p);
+
+func type ast::prog* parse_prog(type parser* p);
+func type ast::decl* parse_decl(type parser* p);
+func type ast::pat* parse_pat_atomic(type parser* p);
+func type ast::pat* parse_pat(type parser* p);
+func type ast::typ* parse_typ(type parser* p);
+func type ast::exp* parse_exp(type parser* p);
+
+} } // namespace shadow::parse

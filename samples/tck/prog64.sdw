@@ -1,0 +1,37 @@
+datatype `a list = Nil | Cons of `a * `a list
+datatype (`a, `b) either = Left of `a | Right of `b
+
+fun foldr f z Nil = z
+	| foldr f z (Cons (x, xs)) = f (x, (foldr f z xs))
+
+fun foldl f z Nil = z
+	| foldl f z (Cons (x, xs)) = foldl f (f (z, x)) xs
+
+fun max f Nil = Left "Cannot get max of a list with no elements!"
+	| max f (Cons (x, xs)) = let
+	fun max_helper (curr, Nil) = Right curr
+		| max_helper (curr, (Cons (y, ys))) = max_helper ((if f (curr, y) then y else curr), ys)
+in
+	max_helper (x, xs)
+end
+
+fun min f Nil = Left "Cannot get min of a list with no elements!"
+	| min f (Cons (x, xs)) = let
+	fun min_helper (curr, Nil) = Right curr
+		| min_helper (curr, (Cons (y, ys))) = min_helper ((if f (curr, y) then curr else y), ys)
+in
+	min_helper (x, xs)
+end
+
+fun all f Nil = true
+	| all f (Cons (x, xs)) = if !(f x) then false else all f xs
+
+fun any f Nil = false
+	| any f (Cons (x, xs)) = if f x then true else any f xs
+
+fun map f Nil = Nil
+	| map f (Cons (x, xs)) = Cons (f x, map f xs)
+
+fun filter f Nil = Nil
+	| filter f (Cons (x, xs)) = if f x then Cons (x, filter f xs) else filter f xs
+

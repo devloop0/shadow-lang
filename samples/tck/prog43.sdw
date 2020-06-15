@@ -1,0 +1,15 @@
+datatype (`a, `b) either = Left of `a | Right of `b
+datatype `a list = Nil | Cons of `a * `a list
+datatype `a option = None | Some of `a
+
+val option2either = fn None => (fn s => Left s)
+	| (Some x) => fn _ => Right x
+
+val either2option = fn (Left _) => None
+	| (Right x) => Some x
+
+val o = Some 2
+val e = Right '2'
+
+val test1 = either2option (option2either o "Error!")
+val test2 = option2either (either2option e) "Error!"

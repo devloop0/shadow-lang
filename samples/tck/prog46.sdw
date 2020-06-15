@@ -1,0 +1,10 @@
+datatype `a list = Nil | Cons of `a * `a list
+datatype `a option = None | Some of `a
+
+fun iterate p f Nil = Nil
+	| iterate p f (Cons (x, l)) = if !(p x) then iterate p f l else Cons (f x, iterate p f l)
+
+val map = iterate (fn _ => true)
+
+val wrap = map (fn x => Some x)
+val unwrap = iterate (fn (Some x) => true | _ => false) (fn (Some x) => x)

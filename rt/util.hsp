@@ -1,0 +1,25 @@
+import "fwd.hsp"
+import "../util/symtab.hsp"
+
+namespace shadow { namespace rt {
+
+func void check(bool b, char* msg);
+
+func void check_row(type object* o, char* msg);
+func void check_int(type object* o, char* msg);
+func void check_real(type object* o, char* msg);
+func void check_string(type object* o, char* msg);
+func void check_bool(type object* o, char* msg);
+func void check_char(type object* o, char* msg);
+func void check_unit(type object* o, char* msg);
+
+func void unreachable(char *msg);
+
+func type util::symtab* scope_push(type util::symtab* parent_scope);
+func type object* scope_lookup(type util::symtab* scope, char* name);
+func void scope_set(type util::symtab* scope, char* name, type object* obj);
+func type util::symtab* scope_pop(type util::symtab* scope);
+
+func type util::symtab* init_rt();
+
+} } // namespace shadow::rt

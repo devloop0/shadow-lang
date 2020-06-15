@@ -1,0 +1,11 @@
+import "../ast/ast.hsp"
+import "env.hsp"
+
+namespace shadow { namespace tck {
+
+func bool constrain_prog(type env* e, type ast::prog* p);
+func bool constrain_decl(type env* e, type ast::decl* d, bool u);
+func bool constrain_pat(type env* e, type ast::pat* p, type ast::typ* s);
+func bool constrain_exp(type env* e, type ast::exp* x, type ast::typ* s);
+
+} } // namespace shadow::tck

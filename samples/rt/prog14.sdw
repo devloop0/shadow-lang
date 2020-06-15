@@ -1,0 +1,2 @@
+val greet = fn x => "Hello " ++ x ++ "!"
+val (nikhil, shadow) = (greet "Nikhil", greet "from Spectre")

@@ -1,0 +1,3 @@
+val x = true andalso false
+val y = true orelse false
+val z = "Hello" ++ " " ++ "World" ++ "!" ++ "\n"

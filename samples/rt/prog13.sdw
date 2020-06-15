@@ -1,0 +1,3 @@
+val f = fn z => fn (x, y) => (x + z, y + z)
+val (tr1, tr2) = (f 1, f 2)
+val (r1, r2, r3, r4) = (tr1 (2, 2), tr1 (1, 1), tr2 (2, 2), tr2 (1, 1))

@@ -1,0 +1,1 @@
+fun g x y = x bitwise_or y | g a b = a + b

@@ -1,0 +1,12 @@
+import "env.hsp"
+import "../ast/ast.hsp"
+import "../util/symtab.hsp"
+
+namespace shadow { namespace tck {
+
+func void print_typ(type env* e, type ast::typ* t);
+func void print_env_symtab(type env* e, type util::symtab* s);
+func void print_env_scope(type env* e, type scope* s);
+func void print_tck_ctx(type env* e);
+
+} } // namespace shadow::tck

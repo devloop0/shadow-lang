@@ -1,0 +1,18 @@
+datatype `a list = Nil | Cons of `a * `a list
+datatype `a binary_tree = Empty | Leaf of `a | Node of `a * `a binary_tree * `a binary_tree
+
+fun num_nodes Empty = 0
+	| num_nodes (Leaf _) = 1
+	| num_nodes (Node (_, l, r)) = 1 + num_nodes l + num_nodes r
+
+fun append Nil x = Cons (x, Nil)
+	| append (Cons (e, l)) x = Cons (e, append l x)
+
+fun extend Nil l = l
+	| extend (Cons (x, xs)) l = Cons (x, extend xs l)
+
+fun in_order Empty = Nil
+	| in_order (Leaf l) = Cons (l, Nil)
+	| in_order (Node (n, l, r)) = extend (append (in_order l) n) (in_order r)
+
+val (x, y, _) = ('x', true, 1)

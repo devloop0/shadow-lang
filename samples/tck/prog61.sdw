@@ -1,0 +1,22 @@
+datatype item = Book | Food | Tech
+datatype `a list = Nil | Cons of `a * `a list
+type cart = (item * int) list
+
+fun init_cart () = Nil : cart
+
+fun add_to_cart (c : cart, i) = let
+	fun helper Nil = Cons ((i, 1), Nil)
+		| helper (Cons ((x, n), l)) =
+			if i != x then Cons ((x, n), helper l) else Cons ((x, n + 1), l)
+in
+	helper c
+end
+
+fun remove_from_cart (Nil, i) = Nil
+	| remove_from_cart (c : cart, i) = let
+	fun helper Nil = Nil
+		| helper (Cons ((x, n), l)) = (if i != x then Cons ((x, n), helper l)
+			else (if n = 1 then l else Cons ((x, n - 1), l)))
+in
+	helper c
+end

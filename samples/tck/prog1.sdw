@@ -1,0 +1,5 @@
+type (`a, `b) i = `a * `b
+type x = (int, char) i
+type `a y = (bool, `a) i
+type (`a, `b) z = (x * `b) -> ((char * `a) y)
+fun f (a : x -> (real, string) z) = 2

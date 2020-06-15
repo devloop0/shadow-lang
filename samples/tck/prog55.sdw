@@ -1,0 +1,2 @@
+fun t1 f a b = f (a, b)
+fun `a t2 f (a : `a) (b : `a) = f (a, b)

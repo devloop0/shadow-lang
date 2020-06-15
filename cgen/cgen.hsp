@@ -1,0 +1,32 @@
+import <"stdx/vector">
+import <"stdx/string">
+
+import "../tck/env.hsp"
+import "../ast/ast.hsp"
+
+namespace shadow { namespace cgen {
+
+struct cgen_data {
+	type stdx::vector::vector::vector* header;
+	type stdx::vector::vector::vector* body;
+	type stdx::vector::vector::vector* main;
+	type stdx::string::string::string* result;
+}
+
+struct cgen_ctx {
+	unsigned int label_counter;
+	type tck::env* e;
+	type cgen_data* cd;
+	bool debug;
+}
+
+func void init_cgen_ctx(type cgen_ctx* c, type tck::env* e);
+func void destroy_cgen_ctx(type cgen_ctx* c);
+
+func void cgen_prog(type cgen_ctx* c, type ast::prog* p);
+func void cgen_decl(type cgen_ctx* c, type cgen_data* cd, type ast::decl* d);
+func void cgen_exp(type cgen_ctx* c, type cgen_data* cd, type ast::exp* e);
+
+func void cgen_exp_fun(type cgen_ctx* c, type cgen_data* cd, type stdx::vector::vector::vector* matches);
+
+} } // namespace shadow::cgen

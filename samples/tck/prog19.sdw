@@ -1,0 +1,2 @@
+datatype `a Option = None | Some of `a
+fun f x = Some (x + 1)

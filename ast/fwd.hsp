@@ -1,0 +1,15 @@
+namespace shadow { namespace ast {
+
+struct prog;
+
+struct fun;
+struct decl;
+
+struct typ;
+
+struct pat;
+
+struct constant;
+struct exp;
+
+} } // namespace shadow::ast

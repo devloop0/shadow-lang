@@ -1,0 +1,30 @@
+import <"stdx/vector">
+
+import "fwd.hsp"
+
+namespace shadow { namespace rt {
+
+namespace object_kind {
+
+constexpr unsigned int PRIM = 0x0,
+	TUP = 0x1,
+	FUN = 0x2,
+	ROW = 0x3;
+
+} // namespace object_kind
+
+union object_types {
+	type row_object* ro;
+	type prim_object* po;
+	type stdx::vector::vector::vector* tup;
+	type fun_object* fo;
+}
+
+struct object {
+	unsigned int kind;
+	type object_types which;
+}
+
+func type object* copy_object(type object* o);
+
+} } // namespace shadow::rt

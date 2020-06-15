@@ -1,0 +1,25 @@
+datatype (`a, `b) either = Left of `a | Right of `b
+
+fun safe_div x 0. = Left "Div by zero!"
+	| safe_div x y = Right (x /. y)
+
+fun iteration f a = (case f a of
+	Left x => iteration f x
+	| Right y => y)
+
+datatype `a option = None | Some of `a
+fun fwd (Some x) f = f x
+	| fwd None f = Left "Error!"
+
+val test = fwd (Some 5.) (fn x => if x = 0. then Left "Div by zero!" else Right (x /. 2.))
+
+fun base_check f (str : string) = fwd (f str) (fn x => case x of 
+	'o' => Right 8
+	| 'O' => Right 8
+	| 'b' => Right 2
+	| 'B' => Right 2
+	| 'x' => Right 16
+	| 'X' => Right 16
+	| 'd' => Right 10
+	| 'D' => Right 10
+)

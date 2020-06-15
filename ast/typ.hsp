@@ -1,0 +1,53 @@
+import <"stdx/vector">
+
+import "../lex/token.hsp"
+
+namespace shadow { namespace ast {
+
+struct typ_row_mem {
+	char* ident;
+	type typ* t;
+}
+
+struct typ_fun {
+	type typ* arg;
+	type typ* ret;
+}
+
+struct typ_constructor {
+	type stdx::vector::vector::vector* typs;
+	type stdx::vector::vector::vector* idents;
+}
+
+union typ_types {
+	type lex::token* var;
+	type typ_fun* tf;
+	type stdx::vector::vector::vector* tup;
+	type stdx::vector::vector::vector* rmems;
+	type typ_constructor* tc;
+	unsigned int tck_var;
+}
+
+namespace typ_kind {
+
+constexpr unsigned int VAR = 0x0,
+	FUN = 0x1,
+	TUP = 0x2,
+	CHAR = 0x3,
+	REAL = 0x4,
+	BOOL = 0x5,
+	STRING = 0x6,
+	INT = 0x7,
+	UNIT = 0x8,
+	CONSTRUCTOR = 0x9,
+	TCK_VAR = 0xa,
+	ROW = 0xb;
+
+} // namespace typ_kind
+
+struct typ {
+	unsigned int kind;
+	type typ_types which;
+}
+
+} } // namespace shadow::ast

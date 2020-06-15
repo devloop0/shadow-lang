@@ -1,0 +1,6 @@
+import "prog.hsp"
+import "decl.hsp"
+import "fun.hsp"
+import "pat.hsp"
+import "typ.hsp"
+import "exp.hsp"

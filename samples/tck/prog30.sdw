@@ -1,0 +1,1 @@
+val rec id = fn x => x && fact = fn 0 => 1 | x => x * fact (id (x - 1))

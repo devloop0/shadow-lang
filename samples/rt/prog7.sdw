@@ -1,0 +1,8 @@
+val y = 2
+val x = 1 < y < 3
+val z = 1 < y + 2 < 3
+val t = x = !z
+val s = 1 + 2 * 3 = 4 * 5 - 12
+val u = 1 + 2 * 3 = 4 * 5 - 13
+val v = 1 = y - 1 = 1 = 1
+val w = 1 = y - 1 = 2 = 1

@@ -1,0 +1,27 @@
+datatype suit = Hearts | Spades | Diamonds | Clubs
+datatype kind = Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack | Queen | King | Ace
+datatype card = Card of kind * suit | Joker
+
+fun suit_to_string x = case x of
+	Hearts => "Hearts"
+	| Spades => "Spades"
+	| Diamonds => "Diamonds"
+	| Clubs => "Clubs"
+
+fun kind_to_string x = case x of
+	Two => "Two"
+	| Three => "Three"
+	| Four => "Four"
+	| Five => "Five"
+	| Six => "Six"
+	| Seven => "Seven"
+	| Eight => "Eight"
+	| Nine => "Nine"
+	| Ten => "Ten"
+	| Jack => "Jack"
+	| Queen => "Queen"
+	| King => "King"
+	| Ace => "Ace"
+
+fun card_to_string (Card (k, s)) = kind_to_string k ++ " of " ++ suit_to_string s
+	| card_to_string Joker = "Joker"

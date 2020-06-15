@@ -1,0 +1,18 @@
+datatype `a list = Nil | Cons of `a * `a list
+type `a directed_graph = {V : (`a * int) list, E : (int * int) list}
+
+fun `a degree ({V, E = Nil} : `a directed_graph, v) = 0
+	| degree ({V, E = (Cons ((a, b), l))}, v) = (if a = v then 1 else 0) + degree ({V = V, E = l}, v)
+
+fun `a select_vertices (G : `a directed_graph, Nil) = Nil
+	| select_vertices (G as {V, E}, Cons (v, l)) = (let fun helper (Cons ((x, y), r)) = if v = y then x else helper r
+		in Cons (helper V, select_vertices (G, l)) end)
+
+fun `a neighbors (G : `a directed_graph as  {V, E}, v) = (let
+	fun neighbors_helper (Cons ((a, b), l))
+		= (let val rest = neighbors_helper l
+		in if a = v then Cons (b, rest) else rest end)
+	| neighbors_helper Nil = Nil
+in
+	select_vertices (G, neighbors_helper E)
+end)

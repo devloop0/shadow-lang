@@ -1,0 +1,29 @@
+import "../lex/lex.hsp"
+
+namespace shadow { namespace util {
+
+namespace error_kind {
+
+constexpr unsigned int NOTE = 0x0,
+	WARN = 0x1,
+	ERR = 0x2,
+	ICE = 0x3;
+
+} // namespace error_kind
+
+struct error_counts {
+	unsigned int error_count;
+	unsigned int warn_count;
+	unsigned int note_count;
+}
+
+func void report_error(unsigned int kind, type lex::buffer* buf, char* msg,
+	unsigned int sc, unsigned int ec, unsigned int s, unsigned int e);
+func void report_token_error(unsigned int kind, type lex::buffer* buf,
+	type lex::token* tok, char* msg);
+func void report_ice(char* msg);
+func void maybe_report_ice(bool c, char* msg);
+
+func void get_error_counts(type error_counts* ec);
+
+} } // namespace shadow::util

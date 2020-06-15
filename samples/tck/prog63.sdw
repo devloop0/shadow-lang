@@ -1,0 +1,14 @@
+datatype alphabet = A | B | C | D
+datatype `a list = Nil | Cons of `a * `a list
+
+# State machine for A((B|C)*DA)*
+
+fun s1 (Cons (A, r)) = s1 r
+	| s1 _ = false
+&& s2 (Cons (B, r)) = s2 r
+	| s2 (Cons (C, r)) = s2 r
+	| s2 (Cons (D, r)) = s3 r
+	| s2 Nil = true
+	| s2 _ = false
+&& s3 (Cons (A, r)) = s2 r
+	| s3 _ = false

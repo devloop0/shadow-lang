@@ -1,0 +1,20 @@
+import <"stdx/vector">
+
+namespace shadow { namespace util {
+
+struct stack {
+	type stdx::vector::vector::vector* data;
+	unsigned int size;
+}
+
+func void init_stack(type stack* s, unsigned int vs);
+func void init_stack_from_vector(type stack* s, type stdx::vector::vector::vector* v);
+func void destroy_stack(type stack* s);
+
+func void stack_push(type stack* s, const byte* b);
+func void stack_pop(type stack* s);
+func byte* stack_top(type stack* s);
+func unsigned int stack_size(type stack* s);
+func byte* stack_at(type stack* s, unsigned int i);
+
+} } // namespace shadow::util

@@ -1,0 +1,13 @@
+import <"stdx/vector">
+
+import "parse.hsp"
+
+namespace shadow { namespace parse {
+
+func type stdx::vector::vector::vector* parse_var_list(
+	type parser* p);
+
+func type stdx::vector::vector::vector* parse_maybe_long_ident(
+	type parser* p);
+
+} } // namespace shadow::parse

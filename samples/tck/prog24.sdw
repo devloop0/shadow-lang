@@ -1,0 +1,18 @@
+datatype `a List = Nil | Cons of `a * `a List
+datatype `a Option = None | Some of `a
+
+fun reduce f Nil init = init
+	| reduce f (Cons (x, l)) init = reduce f l (f (x, init))
+
+fun map f Nil = Nil
+	| map f (Cons (x, l)) = Cons (f x, map f l)
+
+fun length Nil = 0 | length (Cons (_, l)) = 1 + length l
+
+fun unwrap Nil = Nil | unwrap (Cons (Some x, l)) = Cons (x, unwrap l)
+
+fun filter p Nil = Nil
+	| filter p (Cons (x, l)) = if p x then Cons (x, filter p l) else filter p l
+
+fun foldr f init Nil = init
+	| foldr f init (Cons (x, l)) = f (x, (foldr f init l))

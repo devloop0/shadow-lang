@@ -1,0 +1,3 @@
+datatype `a Option = None | Some of (`a * int)
+type i = int
+fun f r = (Some ('c', r), r)

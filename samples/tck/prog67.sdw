@@ -1,0 +1,13 @@
+datatype `a list = Nil | Cons of `a * `a list
+
+efun f (x : int) : char
+efun `a g (G as (x : `a, (y : `a list)))
+
+fun h x y = g (f y, x)
+fun fact 0 = 1 | fact x = x * fact (x - 1)
+
+efun i 2
+
+fun j () = h Nil 0
+val k = h Nil
+val l = h

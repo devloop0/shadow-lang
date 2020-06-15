@@ -1,0 +1,13 @@
+# This is a testament to type-unsafe sum types.
+val x = (1, 2) = (4, 5)
+
+# Don't get confused; this 'x'... 
+fun f x = (case (1, 2) of
+	(_, 1) => 2
+	# ... is different from this one.
+	| (x, _) => 3) 
+
+# Same here.
+fun g x = (case ('x', 2) of
+	(_, 1) => x
+	| (x, _) => 3) 

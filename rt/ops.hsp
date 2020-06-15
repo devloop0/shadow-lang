@@ -1,0 +1,35 @@
+import "fwd.hsp"
+
+namespace shadow { namespace rt {
+
+func type object* add_int(type object* o1, type object* o2);
+func type object* sub_int(type object* o1, type object* o2);
+func type object* mul_int(type object* o1, type object* o2);
+func type object* div_int(type object* o1, type object* o2);
+func type object* mod_int(type object* o1, type object* o2);
+func type object* shl_int(type object* o1, type object* o2);
+func type object* shr_int(type object* o1, type object* o2);
+func type object* band_int(type object* o1, type object* o2);
+func type object* bor_int(type object* o1, type object* o2);
+func type object* xor_int(type object* o1, type object* o2);
+
+func type object* plus_int(type object* o1);
+func type object* minus_int(type object* o1);
+func type object* cmpl_int(type object* o1);
+
+func type object* add_real(type object* o1, type object* o2);
+func type object* sub_real(type object* o1, type object* o2);
+func type object* mul_real(type object* o1, type object* o2);
+func type object* div_real(type object* o1, type object* o2);
+
+func type object* plus_real(type object* o1);
+func type object* minus_real(type object* o1);
+
+func type object* and_bool(type object* o1, type object* o2);
+func type object* or_bool(type object* o1, type object* o2);
+
+func type object* not_bool(type object* o1);
+
+func type object* concat_string(type object* o1, type object* o2);
+
+} } // namespace shadow::rt

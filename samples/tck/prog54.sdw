@@ -1,0 +1,21 @@
+datatype rod = A | B | C
+datatype `a list = Nil | Cons of `a * `a list
+
+fun append (Nil, elem) = Cons (elem, Nil)
+	| append ((Cons (x, l)), elem) = Cons (x, append (l, elem))
+
+fun hanoi n = let
+	fun hanoi_helper (n, f, t, a, l) = if n = 1
+		then append (l, (1, f, t))
+		else (let val l = hanoi_helper (n - 1, f, a, t, l)
+		in
+			(let
+				val l = append (l, (n, f, t))
+			in
+				let val l = hanoi_helper (n - 1, a, t, f, l)
+				in l end
+			end)
+		end)
+in
+	hanoi_helper (n, A, C, B, Nil)
+end

@@ -1,0 +1,17 @@
+import "../util/symtab.hsp"
+import "../util/stack.hsp"
+import "../ast/ast.hsp"
+
+namespace shadow { namespace tck {
+
+struct env;
+
+func void init_binding_symtab(type util::symtab* s);
+func void destroy_binding_symtab(type util::symtab* s);
+
+func bool typ_equal(type env* e, type ast::typ* t1, type ast::typ* t2);
+func bool check_recursive(type env* e, unsigned int tv, type ast::typ* t);
+
+func bool unify(type util::symtab* s, type env* e, type util::stack* typ_constraints);
+
+} } // namespace shadow::tck

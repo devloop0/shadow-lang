@@ -1,0 +1,12 @@
+datatype `a binary_tree = Empty | Leaf of `a | Node of `a * `a binary_tree * `a binary_tree
+type t = int * int -> char * int
+
+val char_tree = Node ('c', Leaf 'a', Leaf 'b')
+val int_tree = Node (5, Node (3, Empty, Leaf 4), Node (7, Leaf 6, Empty))
+
+fun num_nodes Empty = 0
+	| num_nodes (Leaf _) = 1
+	| num_nodes (Node (_, t1, t2)) = 1 + num_nodes t1 + num_nodes t2
+
+val count_char = num_nodes char_tree
+val count_int = num_nodes int_tree

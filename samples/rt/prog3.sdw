@@ -1,0 +1,2 @@
+val x = (2, '2')
+val ((_, y), (z, u), v) = (x, ("sdlfjknsdf", true), ())

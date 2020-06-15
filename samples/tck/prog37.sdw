@@ -1,0 +1,10 @@
+datatype `a binary_tree = Empty | Node of `a branch * `a branch
+&& `b branch = Branch of `b * `b binary_tree
+
+datatype `a list = Nil | Cons of `a * `a list
+
+fun concat (Cons (x, l1)) l2 = Cons (x, concat l1 l2)
+	| concat Nil l2 = l2
+
+fun to_list Empty = Nil
+	| to_list (Node (Branch (e1, lhs), Branch (e2, rhs))) = Cons (e1, Cons (e2, concat (to_list lhs) (to_list rhs)))

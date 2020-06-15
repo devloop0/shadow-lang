@@ -1,0 +1,1 @@
+fun `a f x y = (fn (z, y : `a) => x : `a) y

@@ -1,0 +1,14 @@
+datatype stat = Vig | Att | End | Vit | Str | Dex | Int | Fth | Luck
+
+# Too lazy for the rest
+datatype class = Knight | Deprived
+
+datatype `a list = Nil | Cons of `a * `a list
+
+fun initial_levels Knight = Cons ((Vig, 12), Cons ((Att, 10), Cons ((End, 11), Cons ((Vit, 15), Cons ((Str, 13),
+		Cons ((Dex, 12), Cons ((Int, 9), Cons ((Fth, 9), Cons ((Luck, 7), Nil)))))))))
+	| initial_levels Deprived = Cons ((Vig, 10), Cons ((Att, 10), Cons ((End, 10), Cons ((Vit, 10), Cons ((Str, 10),
+		Cons ((Dex, 10), Cons ((Int, 10), Cons ((Fth, 10), Cons ((Luck, 10), Nil)))))))))
+
+fun level_up (Nil, s) = Nil
+	| level_up (Cons ((st, lv), nx), s : stat) = Cons ((st, if st = s andalso lv != 99 then lv + 1 else lv), level_up (nx, s))

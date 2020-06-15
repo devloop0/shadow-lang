@@ -1,0 +1,7 @@
+datatype `a option = Some of `a | None
+datatype `a option2 = Some2 of `a | None2
+type `a option3 = `a option
+type `a option4 = `a option2
+
+fun f (x : int option) = (x : int option3)
+fun g (y : int option2) = (y : int option4)

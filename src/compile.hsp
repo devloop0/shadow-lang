@@ -1,0 +1,7 @@
+namespace shadow { namespace compile {
+
+func int compile_file(char* file_name, bool print);
+
+func int compile_samples(unsigned int num_files);
+
+} } // namespace shadow::compile

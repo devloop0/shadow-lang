@@ -1,0 +1,6 @@
+fun f x = case x of
+	{x : int} => {x = x, y = x}
+
+fun g {x = '2'} = x
+
+fun h {x : bool, y : int} = (y, x)

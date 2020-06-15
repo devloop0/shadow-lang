@@ -1,0 +1,18 @@
+import "fwd.hsp"
+
+namespace shadow { namespace rt {
+
+func type object* int_lt(type object* o1, type object* o2);
+func type object* int_le(type object* o1, type object* o2);
+func type object* int_gt(type object* o1, type object* o2);
+func type object* int_ge(type object* o1, type object* o2);
+
+func type object* real_lt(type object* o1, type object* o2);
+func type object* real_le(type object* o1, type object* o2);
+func type object* real_gt(type object* o1, type object* o2);
+func type object* real_ge(type object* o1, type object* o2);
+
+func type object* eq(type object* o1, type object* o2);
+func type object* ne(type object* o1, type object* o2);
+
+} } // namespace shadow::rt

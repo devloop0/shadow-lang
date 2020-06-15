@@ -1,0 +1,29 @@
+datatype `a list = Nil | Cons of `a * `a list
+
+fun take _ Nil = Nil
+	| take 0 l = l
+	| take n Nil = Nil
+	| take n (Cons (x, xs)) = Cons (x, take (n - 1) xs)
+
+fun replicate 0 _ = Nil
+	| replicate n x = Cons (x, replicate (n - 1) x)
+
+fun head (Cons (x, _)) = x
+
+fun last (Cons (x, Nil)) = x
+	| last (Cons (x, xs)) = last xs
+
+fun tail Nil = Nil
+	| tail (Cons (x, xs)) = xs
+
+fun init Nil = Nil
+	| init (Cons (x, Nil)) = Nil
+	| init (Cons (x, xs)) = Cons (x, init xs)
+
+fun drop 0 l = l
+	| drop n Nil = Nil
+	| drop n (Cons (x, xs)) = drop (n - 1) xs
+
+fun dropWhile f Nil = Nil
+	| dropWhile f (Cons (x, xs)) = if f x then dropWhile f xs else xs
+

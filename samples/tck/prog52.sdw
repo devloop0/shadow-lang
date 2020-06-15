@@ -1,0 +1,5 @@
+fun l2norm_2d {x, y} = (x *. x +. y *. y)
+fun l2norm_3d {x, y, z} = (x *. x +. y *. y +. z *. z)
+
+val dist1 = l2norm_2d {x = 2.0, y = 5.0}
+&& dist2 = l2norm_3d {x = 3.0, y = 5.0, z = 6.0}

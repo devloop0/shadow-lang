@@ -1,0 +1,3 @@
+type (`a, `b) gft = `a -> `b
+fun (`x, `y) f (n : `x) m : (`x, `y) gft = fn n => m
+fun `x m (g: (`x, `x) gft) (x : `x) = g x

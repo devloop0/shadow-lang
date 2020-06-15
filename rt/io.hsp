@@ -1,0 +1,11 @@
+import "fwd.hsp"
+
+namespace shadow { namespace rt { namespace io {
+
+func int print(type object* obj);
+func int println(type object* obj);
+
+func int debug(type object* obj);
+func int debugln(type object* obj);
+
+} } } // namespace shadow::rt::io

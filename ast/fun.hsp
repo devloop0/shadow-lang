@@ -1,0 +1,26 @@
+import <"stdx/vector">
+
+import "../lex/token.hsp"
+import "fwd.hsp"
+
+namespace shadow { namespace ast {
+
+struct fun_match {
+	type lex::token* fun_name;
+	type stdx::vector::vector::vector* args;
+	
+	type typ* ret;
+	type exp* e;
+}
+
+struct fun_bind {
+	type stdx::vector::vector::vector* fun_matches;
+}
+
+struct fun {
+	type stdx::vector::vector::vector* typ_vars;
+
+	type stdx::vector::vector::vector* fun_binds;
+}
+
+} } // namespace shadow::ast

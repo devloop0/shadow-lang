@@ -1,0 +1,9 @@
+datatype `a List = Nil | Cons of `a * `a List
+
+fun haar l = let
+	fun aux (Cons (s, Nil)) Nil d = Cons (s, d)
+	| aux Nil s d = aux s Nil d
+	| aux (Cons (h1, Cons (h2, t))) s d = aux t (Cons (h1 + h2, s)) (Cons (h1 - h2, d))
+in
+	aux l Nil Nil
+end

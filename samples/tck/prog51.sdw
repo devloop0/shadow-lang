@@ -1,0 +1,8 @@
+fun f r = case r of
+	{x, y} => x
+	| {y, x} => y
+
+val g = f {x = '3', y = '4'}
+
+fun h {x = 2, y} = x
+	| h {x, y} = y

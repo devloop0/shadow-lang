@@ -1,0 +1,40 @@
+datatype expr = Numeral of int
+	| Plus of expr * expr
+	| Minus of expr * expr
+	| Times of expr * expr
+	| Div of expr * expr
+	| Mod of expr * expr
+	| Paren of expr
+	| If of boolexpr * expr * expr
+&& boolexpr = True | False
+	| And of boolexpr * boolexpr
+	| Or of boolexpr * boolexpr
+	| Gt of expr * expr
+	| Lt of expr * expr
+	| Le of expr * expr
+	| Ge of expr * expr
+	| Eq of expr * expr
+	| Ne of expr * expr
+
+fun eval_expr (Numeral i) = i
+	| eval_expr (Paren e) = eval_expr e
+	| eval_expr (If (cond, p1, p2)) = if eval_boolexpr cond then eval_expr p1 else eval_expr p2
+	| eval_expr e = (case e of 
+		Plus (e1, e2) => eval_expr e1 + eval_expr e2
+		| Minus (e1, e2) => eval_expr e1 - eval_expr e2
+		| Times (e1, e2) => eval_expr e1 * eval_expr e2
+		| Div (e1, e2) => eval_expr e1 / eval_expr e2
+		| Mod (e1, e2) => eval_expr e1 % eval_expr e2
+	)
+&& eval_boolexpr True = true
+	| eval_boolexpr False = false
+	| eval_boolexpr (And (b1, b2)) = eval_boolexpr b1 andalso eval_boolexpr b2
+	| eval_boolexpr (Or (b1, b2)) = eval_boolexpr b1 orelse eval_boolexpr b2
+	| eval_boolexpr b = (case b of
+		Gt (e1, e2) => eval_expr e1 > eval_expr e2
+		| Ge (e1, e2) => eval_expr e1 >= eval_expr e2
+		| Lt (e1, e2) => eval_expr e1 < eval_expr e2
+		| Le (e1, e2) => eval_expr e1 <= eval_expr e2
+		| Eq (e1, e2) => eval_expr e1 = eval_expr e2
+		| Ne (e1, e2) => eval_expr e1 != eval_expr e2
+	)

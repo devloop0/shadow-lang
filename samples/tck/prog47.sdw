@@ -1,0 +1,16 @@
+datatype `a list = Nil | Cons of `a * `a list
+datatype (`a, `b) either = Left of `a | Right of `b
+
+fun iterate p f Nil = Nil
+	| iterate p f (Cons (x, l)) = let
+		val res = p x
+	in
+		if !res then iterate p f l else Cons (f x, iterate p f l)
+	end
+
+val map = iterate (fn _ => true)
+val is_valid = (fn (Left _) => false | _ => true)
+fun identity x = x
+
+val only_valid = iterate is_valid identity
+val unwrap_either = iterate is_valid (fn (Left x) => x)

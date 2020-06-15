@@ -1,0 +1,1 @@
+fun f x y = case x of n => n | 2 => y

@@ -1,0 +1,37 @@
+import <"stdx/vector">
+
+import "../util/symtab.hsp"
+import "../lex/token.hsp"
+import "../ast/ast.hsp"
+import "env.hsp"
+
+namespace shadow { namespace tck {
+
+func type ast::typ* fresh_typ_variable(type env* e);
+func char* extract_token_text(type env* e, type lex::token* tok);
+func char* extract_var_text(type env* e, type lex::token* tok);
+
+func type scope construct_scope(type env* e);
+func void destroy_scope(type scope* s);
+
+func type ast::typ* generate_fun_typ(type env* e, unsigned int num_args);
+func type ast::typ* generate_tup_typ(type env* e, unsigned int num_elems);
+func type ast::typ* generate_base_typ(unsigned int kind);
+func byte* lookup_long_typ_ident(type env* e, type stdx::vector::vector::vector* idents);
+func byte* lookup_long_datatyp_ident(type env* e, type stdx::vector::vector::vector* idents);
+func byte* lookup_long_sym_ident(type env* e, type stdx::vector::vector::vector* idents);
+func byte* lookup_long_datatyp_constructor_ident(type env* e, type stdx::vector::vector::vector* idents);
+
+func type ast::typ* substitute_typ_variables(type env* e, type ast::typ* t,
+	type util::symtab* subst);
+func type ast::typ* refresh_typ_variables(type env* e, type ast::typ* t,
+	type util::symtab* subst);
+func type ast::typ* reconstruct_typ_with_ctx(type env* e, type ast::typ* t);
+func type ast::typ* reconstruct_and_refresh_typ_with_ctx(type env* e, type ast::typ* t);
+func bool check_feasibility(type env* e, type ast::typ* lhs, type ast::typ* rhs, bool rec);
+
+func bool subst_tab_cmp(const byte* a, const byte* b);
+func void init_subst_tab(type util::symtab* s);
+func void destroy_subst_tab(type util::symtab* s);
+
+} } // namespace shadow::tck

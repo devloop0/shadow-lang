@@ -1,0 +1,21 @@
+fun add (p1, p2) = case (p1, p2) of
+	({x : int as orig_x, y : int as orig_y},
+	{x : int, y : int}) => {x = orig_x + x, y = orig_y + y}
+
+fun neg {x : int, y : int} = {x = -x, y = -y}
+
+fun sub (p1, p2) = add (p1, neg p2)
+
+fun dup (x : int) = {x = x, y = x}
+
+fun scale (p1, p2) = case (p1, p2) of
+	({x : int as orig_x, y : int as orig_y},
+	{x : int, y : int}) => {x = orig_x * x, y = orig_y * y}
+
+fun pow (x, 0) = 1
+	| pow (x, n) = x * pow (x, n - 1)
+
+fun lnorm ({x : int, y : int}, n) = pow (x, n) + pow (y, n)
+
+val l2norm = fn p => lnorm (p, 2)
+val l1norm = fn p => lnorm (p, 1)

@@ -1,0 +1,4 @@
+datatype `a List = Nil | Cons of `a * `a List
+datatype Li = datatype List
+datatype L = datatype Li
+fun f (x: int L) = 0

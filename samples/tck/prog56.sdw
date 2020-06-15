@@ -1,0 +1,5 @@
+fun quadratic {a, b, c} x = a *. (x *. x) +. b *. x +. c
+
+val f = quadratic {a=1., b=2., c=-.4.}
+val g = quadratic {a=-.2., b=3., c=5.}
+fun f_g x = f x -. g x

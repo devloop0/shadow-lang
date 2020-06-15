@@ -1,0 +1,12 @@
+datatype int_exp = plus of int_term * int_term
+	| minus of int_term * int_term
+&& int_term = times of int_factor * int_factor
+	| divide of int_factor * int_factor
+	| modulo of int_factor * int_factor
+&& int_factor = int_lit of int
+	| paren of int_exp
+
+fun f x y = case x of plus (x, _) => x | minus (_, _) => y
+
+fun g a b c d = plus (times (c, paren d), divide (int_lit 3,
+	paren (plus (a, modulo b))))
