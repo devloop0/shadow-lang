@@ -22,6 +22,7 @@ Running a program should be as simple as:
 $ ./build_sdw_debug.sh <file name>
 ```
 Only a subset of features are currently supported at runtime (although the typechecker is pretty complete).
+
 *I'll probably add some more information here when I'm less tired.*
 
 # License
