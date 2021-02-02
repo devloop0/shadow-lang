@@ -43,7 +43,7 @@ $ rm -f mod_build/ mod_build.sh
 
 At this point, the `prelude` is available for any Spectre program you compile to use and link against.
 
-Note that while this process was with respect to the `.prelude` module, you should be able to apply this same process to any other module that you want to create as well.
+Note that while this process was with respect to the `prelude` module, you should be able to apply this same process to any other module that you want to create as well.
 
 # Running
 This example will use the `prelude` (if you don't want to use the `prelude`, you can just write a simple test program like:
@@ -54,7 +54,7 @@ val x = 2
 
 instead; the syntax of the Shadow is heavily ML-inspired).
 
-Save the following file to `s.sdw`:
+Save the following code to `s.sdw`:
 
 ```
 import .prelude
@@ -81,7 +81,7 @@ Now run the following command:
 $ ./build/shadow compile -dv s.sdw
 ```
 
-The `-v` here is optional, but the `-d` is important, since currently, the only way to print something is through this flag. `-d` (debug) will print the value of a variable, everytime it is created/stored.
+The `-v` here is optional, but the `-d` is important, since currently, the only way to print something is through this flag. `-d` (debug) will print the value of a variable, every time it is created/stored.
 
 This will generate an `a` output file with the generated Spectre source code, and a `build.sh` build script that you can run to compile the program. You can now run the program with:
 
@@ -100,7 +100,7 @@ $ rm -f a.out a build.sh
 You can test both the runtime and the typechecker independently through the `rt_test.sh` and `tck_test.sh` scripts. The `tck_test.sh` script will output types to a `tck_outputs`, which you can `diff` against `samples/ref_tck.txt`. Similarly, `rt_test.sh` will output a `cgen_outputs` folder with the generated Spectre source code, and will output runtime outputs to a `rt_outputs` file, which you can diff against `samples/ref_rt.txt`. The source code for the tests is in `samples/{tck,rt}`.
 
 # Future Work
-The standard library (starting with `prelude`), definitely needs to built out more, and a `print` function is probably a high priority.
+The standard library (starting with `prelude`), definitely needs to be built out more, and a `print` function is probably a high priority.
 
 More debugging with modules needs to be done.
 
