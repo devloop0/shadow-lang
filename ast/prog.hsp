@@ -1,17 +1,25 @@
 import <"stdx/vector">
 
 import "fwd.hsp"
+import "../lex/token.hsp"
 
 namespace shadow { namespace ast {
 
 namespace top_level_kind {
 
-constexpr unsigned int DECL = 0x0;
+constexpr unsigned int DECL = 0x0,
+	IMPORT = 0x1;
 
 } // namespace top_level_kind
 
+struct mod_import {
+	type lex::token* import_token;
+	type stdx::vector::vector::vector* module_ref;
+}
+
 union top_level_types {
 	type decl* top_level_decl;
+	type mod_import* top_level_import;
 }
 
 struct top_level {

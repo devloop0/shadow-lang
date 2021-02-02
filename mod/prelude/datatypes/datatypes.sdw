@@ -1,0 +1,5 @@
+datatype `a List = Nil | Cons of `a * `a List
+
+datatype `a Maybe = Just of `a | Nothing
+
+datatype (`a,`b) Either = Left of `a | Right of `b

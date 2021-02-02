@@ -5,6 +5,7 @@ import <"std/string">
 import <"std/lib">
 import <"std/io">
 
+import "src/compile.hsp"
 import "tck/debug.hsp"
 import "util/symtab.hsp"
 import "util/error.hsp"
@@ -12,8 +13,10 @@ import "tck/env.hsp"
 import "ast/ast.hsp"
 
 using namespace stdx::vector;
+using namespace stdx::string;
 using std::string::strncpy;
 using std::string::strcmp;
+using std::string::strlen;
 using std::lib::malloc;
 using std::lib::free;
 using std::lib::NULL;
@@ -32,7 +35,7 @@ func type ast::typ* fresh_typ_variable(type env* e) {
 func char* extract_token_text(type env* e, type lex::token* tok) {
 	unsigned int tok_length = tok->end_pos - tok->start_pos;
 	char* str = malloc(tok_length + 1) as char*;
-	strncpy(str, e->par->buf->text[tok->start_pos]$, tok_length);
+	strncpy(str, tok->buf_ref->text[tok->start_pos]$, tok_length);
 	str[tok_length] = 0;
 	return str;
 }
@@ -41,7 +44,7 @@ func char* extract_var_text(type env* e, type lex::token* tok) {
 	unsigned int tok_length = tok->end_pos - tok->start_pos;
 	char* str = malloc(tok_length + 2) as char*;
 	str[0] = '`';
-	strncpy(str[1]$, e->par->buf->text[tok->start_pos]$, tok_length);
+	strncpy(str[1]$, tok->buf_ref->text[tok->start_pos]$, tok_length);
 	str[tok_length + 1] = 0;
 	return str;
 }
@@ -91,35 +94,93 @@ func type ast::typ* generate_fun_typ(type env* e, unsigned int num_args) {
 	return ret;
 }
 
-func[static] byte* lookup_long_ident_helper(type env* e, type vector::vector* idents,
-	type util::symtab* s) {
-	util::maybe_report_ice(vector::size(idents) > 0,
-		"Expected at least one identifier for a type identifier!\n");
-	type lex::token* ident = vector::at(idents, 0) as type lex::token** @;
-	if (vector::size(idents) != 1) {
-		util::report_token_error(util::error_kind::ERR, e->par->buf, ident,
-			"Did not expect a nested type identifier.");
-		return NULL;
+namespace name_kind {
+
+static constexpr unsigned int TYP = 0x0,
+	DATATYP = 0x1,
+	SYM = 0x2,
+	DATATYP_CONSTRUCTOR = 0x4;
+
+} // namespace name_kind
+
+func[static] type util::symtab* name_kind_2_symtab(type scope* sc, unsigned int kind) {
+	type util::symtab* s = NULL as type util::symtab*;
+
+	switch (kind) {
+	case name_kind::TYP:
+		return sc->typ_2_typ_var;
+	case name_kind::DATATYP:
+		return sc->datatyp_2_typ_var;
+	case name_kind::SYM:
+		return sc->sym_2_typ_var;
+	case name_kind::DATATYP_CONSTRUCTOR:
+		return sc->datatyp_constructor_2_typ_var;
+	default:
+		util::report_ice("Unrecognized name_kind found during lookup!");
+		return NULL as type util::symtab*;
 	}
 
-	char* ident_text = extract_token_text(e, ident);
-	return util::symtab_lookup(s, ident_text$ as byte*, true);
+	return NULL as type util::symtab*;
+}
+
+func[static] byte* lookup_long_ident_helper(type env* e, type vector::vector* idents,
+	unsigned int kind) {
+	util::maybe_report_ice(vector::size(idents) > 0,
+		"Expected at least one identifier for a type identifier!");
+
+	if (vector::size(idents) == 1) {
+		type lex::token* ident = vector::at(idents, 0) as type lex::token** @;
+
+		char* ident_text = extract_token_text(e, ident);
+		return util::symtab_lookup(name_kind_2_symtab(e->current_scope$, kind),
+			ident_text$ as byte*, true);
+	}
+
+	type vector::vector* module_name = get_name_from_identifier(e, idents);
+	type vector::vector* full_module_name = to_fully_qualified_name(e, module_name);
+	type string::string* full_module_name_str = string::new_string("");
+	for (unsigned int i = 0; i < vector::size(full_module_name) - 1; i++) {
+		char* curr = vector::at(full_module_name, i) as char** @;
+		if (curr != NULL as char*) {
+			full_module_name_str = string::addc(full_module_name_str, compile::MOD_FILE_SEP);
+			full_module_name_str = string::addc(full_module_name_str, curr);
+		}
+	}
+	char* full_module_name_pstr = string::data(full_module_name_str);
+
+	type lex::token* name_tok = vector::at(idents, vector::size(idents) - 1) as type lex::token** @;
+	char* name_str = extract_token_text(e, name_tok);
+	
+	if (strlen(full_module_name_pstr) == 0) {
+		type util::symtab* s = name_kind_2_symtab(e->global_scope$, kind);
+		return util::symtab_lookup(s, name_str$ as byte*, false);
+	}
+	
+	byte* mod_ctx_check = util::symtab_lookup(e->mod_ref->imported_modules,
+		full_module_name_pstr$ as byte*, false);
+	if (mod_ctx_check == NULL) return NULL;
+	type module* mod_ctx = mod_ctx_check as type module** @;
+
+	if (mod_ctx->e == NULL as type env*) return NULL;
+
+	type util::symtab* s = name_kind_2_symtab(mod_ctx->e->global_scope$, kind);
+	return util::symtab_lookup(s, name_str$ as byte*, false);
 }
 
 func byte* lookup_long_typ_ident(type env* e, type vector::vector* idents) {
-	return lookup_long_ident_helper(e, idents, e->current_scope.typ_2_typ_var);
+	return lookup_long_ident_helper(e, idents, name_kind::TYP);
 }
 
 func byte* lookup_long_datatyp_ident(type env* e, type vector::vector* idents) {
-	return lookup_long_ident_helper(e, idents, e->current_scope.datatyp_2_typ_var);
+	return lookup_long_ident_helper(e, idents, name_kind::DATATYP);
 }
 
 func byte* lookup_long_sym_ident(type env* e, type vector::vector* idents) {
-	return lookup_long_ident_helper(e, idents, e->current_scope.sym_2_typ_var);
+	return lookup_long_ident_helper(e, idents, name_kind::SYM);
 }
 
 func byte* lookup_long_datatyp_constructor_ident(type env* e, type vector::vector* idents) {
-	return lookup_long_ident_helper(e, idents, e->current_scope.datatyp_constructor_2_typ_var);
+	return lookup_long_ident_helper(e, idents, name_kind::DATATYP_CONSTRUCTOR);
 }
 
 func type ast::typ* refresh_typ_variables(type env* e, type ast::typ* t, type util::symtab* subst) {
@@ -324,10 +385,10 @@ func type ast::typ* substitute_typ_variables(type env* e, type ast::typ* t,
 			type ast::typ_constructor* ntc = malloc(sizeof{type ast::typ_constructor})
 				as type ast::typ_constructor*;
 			ntc->idents = dtl_tc->idents;
-			type lex::token* first = vector::at(tc->idents, 0) as type lex::token** @;
+			type lex::token* err_first = get_non_null_token(tc->idents);
 
 			if (vector::size(tc->typs) != vector::size(dtl_tc->typs)) {
-				util::report_token_error(util::error_kind::ERR, e->par->buf, first,
+				util::report_token_error(util::error_kind::ERR, e->par->buf, err_first,
 					"Incorrect arity for type!");
 				return NULL as type ast::typ*;
 			}
@@ -350,9 +411,11 @@ func type ast::typ* substitute_typ_variables(type env* e, type ast::typ* t,
 		}
 
 		byte* t_lookup = lookup_long_typ_ident(e, tc->idents);
-		type lex::token* first = vector::at(tc->idents, 0) as type lex::token** @;
+		type lex::token* err_first = get_non_null_token(tc->idents);
 		if (t_lookup == NULL) {
-			util::report_token_error(util::error_kind::ERR, e->par->buf, first,
+			// print_tck_ctx(e);
+			// print_typ(e, t);
+			util::report_token_error(util::error_kind::ERR, e->par->buf, err_first,
 				"Type not found.");
 			return NULL as type ast::typ*;
 		}
@@ -368,7 +431,7 @@ func type ast::typ* substitute_typ_variables(type env* e, type ast::typ* t,
 		type util::symtab to_subst;
 		init_subst_tab(to_subst$);
 		if (vector::size(lookup_tc->typs) - 1 != vector::size(tc->typs)) {
-			util::report_token_error(util::error_kind::ERR, e->par->buf, first,
+			util::report_token_error(util::error_kind::ERR, e->par->buf, err_first,
 				"Incorrect arity for type!");
 			return NULL as type ast::typ*;
 		}
@@ -407,9 +470,9 @@ func[static] type ast::typ* reconstruct_typ_with_ctx_helper(type env* e, type as
 		type vector::vector* idents = tc->idents;
 		byte* typ_lookup_check = lookup_long_typ_ident(e, idents),
 			datatyp_lookup_check = lookup_long_datatyp_ident(e, idents);
-		type lex::token* ident = vector::at(idents, 0) as type lex::token** @;
+		type lex::token* err_ident = get_non_null_token(idents);
 		if (typ_lookup_check == NULL && datatyp_lookup_check == NULL) {
-			util::report_token_error(util::error_kind::ERR, e->par->buf, ident,
+			util::report_token_error(util::error_kind::ERR, e->par->buf, err_ident,
 				"This type was not found.");
 			return NULL as type ast::typ*;
 		}
@@ -686,6 +749,86 @@ func void init_subst_tab(type util::symtab* s) {
 
 func void destroy_subst_tab(type util::symtab* s) {
 	util::destroy_symtab(s);
+}
+
+func type vector::vector* get_name_from_identifier(
+	type env* e, type vector::vector* ident) {
+	type vector::vector* ret = vector::new_vector(sizeof{char*});
+	char* null_str = NULL as char*;
+
+	for (unsigned int i = 0; i < vector::size(ident); i++) {
+		type lex::token* tok = vector::at(ident, i) as type lex::token** @;
+		char* ins;
+		if (tok == NULL as type lex::token*)
+			ins = null_str;
+		else
+			ins = extract_token_text(e, tok);
+
+		util::maybe_report_ice(!vector::append(ret, ins$ as byte*) as bool,
+			"Could not keep track of extracted name from identifier!");
+	}
+	return ret;
+}
+
+func type vector::vector* to_fully_qualified_name(type env* e,
+	type vector::vector* name) {
+	if (vector::size(name) == 0)
+		return name;
+
+	char* initial = vector::at(name, 0) as char** @;
+	if (initial == NULL as char*)
+		return name;
+
+	type vector::vector* ret = vector::new_vector(sizeof{char*});
+	type module* iter = e->mod_ref;
+	while (iter != e->mod_ref->global_module) {
+		util::maybe_report_ice(!vector::uint_insert(ret, 0, iter->module_name$ as byte*) as bool,
+			"Could not keep track of the module hierarchy while constructing a fully qualified name!");
+		iter = iter->parent_module;
+	}
+	char* null_str = NULL as char*;
+	util::maybe_report_ice(!vector::uint_insert(ret, 0, null_str$ as byte*) as bool,
+		"Could not insert NULL sentinel while constructing a fully qualified name!");
+
+	for (unsigned int i = 0; i < vector::size(name); i++) {
+		char* curr = vector::at(name, i) as char** @;
+		util::maybe_report_ice(!vector::append(ret, curr$ as byte*) as bool,
+			"Could not keep track of the original name while constructing a fully qualified name!");
+	}
+
+	return ret;
+}
+
+func type string::string* extract_module_name(type module* module_context, const char* sep) {
+	type vector::vector* mod_hierarchy = vector::new_vector(sizeof{char*});
+	util::maybe_report_ice(!vector::append(mod_hierarchy, module_context->module_name$ as byte*) as bool,
+		"Could not keep track of the module name!");
+	type module* iter = module_context->parent_module;
+	while (iter != NULL as type module*) {
+		if (iter != module_context->global_module) {
+			util::maybe_report_ice(!vector::append(mod_hierarchy, iter->module_name$ as byte*) as bool,
+				"Could not keep track of module names in a module's hierarchy!");
+		}
+		iter = iter->parent_module;
+	}
+
+	type string::string* ret = string::new_string("");
+	for (unsigned int i = vector::size(mod_hierarchy); i > 0; i--) {
+		char* c = vector::at(mod_hierarchy, i - 1) as char** @;
+		ret = string::addc(string::addc(ret, sep), c);
+	}
+
+	return ret;
+}
+
+func type lex::token* get_non_null_token(type vector::vector* ident) {
+	util::maybe_report_ice(vector::size(ident) > 0,
+		"Expected an identifier to extract a token from");
+
+	type lex::token* tok = vector::at(ident, 0) as type lex::token**@;
+	if (tok != NULL as type lex::token*) return tok;
+
+	return vector::at(ident, 1) as type lex::token** @;
 }
 
 } } // namespace shadow::tck

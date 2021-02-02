@@ -62,5 +62,4 @@ struct decl {
 	type decl_types which;
 }
 
-
 } } // namespace shadow::ast

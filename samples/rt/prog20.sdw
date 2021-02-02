@@ -1,0 +1,7 @@
+val id = fn c => c
+
+val x = false andalso id true
+val y = true andalso id true
+
+val a = false orelse id false
+val b = true orelse id false

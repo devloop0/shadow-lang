@@ -26,6 +26,7 @@ func type lex::token* peek(type parser* p);
 
 func type ast::prog* parse_prog(type parser* p);
 func type ast::decl* parse_decl(type parser* p);
+func type ast::mod_import* parse_mod_import(type parser* p);
 func type ast::pat* parse_pat_atomic(type parser* p);
 func type ast::pat* parse_pat(type parser* p);
 func type ast::typ* parse_typ(type parser* p);

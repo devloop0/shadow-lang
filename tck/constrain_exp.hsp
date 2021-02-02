@@ -1,0 +1,12 @@
+import <"stdx/vector">
+
+import "../ast/ast.hsp"
+import "env.hsp"
+
+namespace shadow { namespace tck {
+
+func bool constrain_binary_exp(type env* e, type ast::exp_binary* eb, type ast::typ* s);
+func bool constrain_ident_exp(type env* e, type stdx::vector::vector::vector* ident,
+	type ast::typ* s_reconstructed);
+
+} } // namespace shadow::tck

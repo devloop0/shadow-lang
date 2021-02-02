@@ -24,7 +24,8 @@ func type ast::decl* parse_decl(type parser* p) {
 		&& ptok->tok_type != lex::tokens::EFUN
 		&& ptok->tok_type != lex::tokens::TYPE
 		&& ptok->tok_type != lex::tokens::DATATYPE
-		&& ptok->tok_type != lex::tokens::VAL) {
+		&& ptok->tok_type != lex::tokens::VAL
+		&& ptok->tok_type != lex::tokens::IMPORT) {
 		util::report_token_error(util::error_kind::ERR, p->buf,
 			ptok, "Invalid start to a declaration.");
 		return NULL as type ast::decl*;
@@ -218,7 +219,7 @@ func type ast::decl* parse_decl(type parser* p) {
 				}
 
 				ptok = peek(p);
-				if (ptok->tok_type != lex::tokens::IDENT) {
+				if (ptok->tok_type != lex::tokens::IDENT && ptok->tok_type != lex::tokens::DOT) {
 					util::report_token_error(util::error_kind::ERR, p->buf, ptok,
 						"Expected the name of the datatype to replicate here.");
 					return NULL as type ast::decl*;

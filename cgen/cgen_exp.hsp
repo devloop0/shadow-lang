@@ -6,5 +6,9 @@ func void cgen_exp_fun(type cgen_ctx* c, type cgen_data* cd, type stdx::vector::
 func void cgen_exp_unary(type cgen_ctx* c, type cgen_data* cd, type ast::exp_unary* un);
 func void cgen_exp_if(type cgen_ctx* c, type cgen_data* cd, type ast::if_exp* iexp);
 func void cgen_exp_app(type cgen_ctx* c, type cgen_data* cd, type ast::exp_app* app);
+func void cgen_exp_cmp(type cgen_ctx* c, type cgen_data* cd, type ast::exp_cmp* cmp);
+func void cgen_exp_binary(type cgen_ctx* c, type cgen_data* cd, type ast::exp_binary* eb);
+func void cgen_exp_let(type cgen_ctx* c, type cgen_data* cd, type ast::let_exp* lexp);
+func void cgen_exp_case(type cgen_ctx* c, type cgen_data* cd, type ast::case_exp* cexp);
 
 } } // namespace shadow::cgen

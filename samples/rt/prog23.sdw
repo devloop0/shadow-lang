@@ -1,0 +1,5 @@
+val rec fact = fn 0 => 1 | n => n * fact (n - 1)
+val (n4, n5, n6) = (fact 4, fact 5, fact 6)
+
+val f = fn (0, x) => x | (x, 0) => x + 1 | (x, y) => x + y
+val (a, b, c) = (f (-12, 0), f (0, 3), f (12, 23))

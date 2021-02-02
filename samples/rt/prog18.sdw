@@ -1,0 +1,12 @@
+val (x, y) = let 
+	val rec fact = fn x => let
+		val c = fn _ => x
+	in
+		if x = 0 then 1 else fact (c () - 1) * c ()
+	end
+in
+	(fact 10, fact 7)
+end
+
+val fact = fn x => 123
+val (a, b) = (fact 10, fact 7)

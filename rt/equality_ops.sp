@@ -1,5 +1,6 @@
 import "rt/cmps.hsp"
 
+import <"std/lib">
 import <"stdx/vector">
 import <"std/string">
 
@@ -7,9 +8,11 @@ import "rt/row_object.hsp"
 import "rt/fun_object.hsp"
 import "rt/object.hsp"
 import "rt/prim_object.hsp"
+import "rt/datatyp_object.hsp"
 import "rt/util.hsp"
 import "util/symtab.hsp"
 
+using std::lib::NULL;
 using std::string::strcmp;
 using namespace stdx::vector;
 
@@ -72,9 +75,7 @@ func[static] bool raw_equality_cmp(type object* o1, type object* o2, bool eq) {
 		break;
 	case object_kind::FUN: {
 		type fun_object* fun1 = o1->which.fo, fun2 = o2->which.fo;
-		return eq
-			? (fun1->scope == fun2->scope && fun1->fun == fun2->fun)
-			: (fun1->scope != fun2->scope || fun1->fun != fun2->fun);
+		return eq ? (fun1->fun == fun2->fun) : (fun1->fun != fun2->fun);
 	}
 		break;
 	case object_kind::ROW: {
@@ -106,6 +107,21 @@ func[static] bool raw_equality_cmp(type object* o1, type object* o2, bool eq) {
 			if (!is_eq) break;
 		}
 		return eq ? is_eq : !is_eq;
+	}
+		break;
+	case object_kind::DATATYP: {
+		type datatyp_object* dto1 = o1->which.dto, dto2 = o2->which.dto;
+		if (strcmp(dto1->name, dto2->name) != 0)
+			return !eq;
+
+		if (dto1->data == NULL as type rt::object* && dto2->data == NULL as type rt::object*)
+			return eq;
+		else if (dto1->data == NULL as type rt::object* || dto2->data == NULL as type rt::object*)
+			return !eq;
+		else {
+			bool inner_eq = raw_equality_cmp(dto1->data, dto2->data, true);
+			return eq ? inner_eq : !inner_eq;
+		}
 	}
 		break;
 	}

@@ -1,0 +1,3 @@
+val _2xp2y = fn ((x, y) : (int * int)) => x + y
+
+val test = _2xp2y (23, 67)

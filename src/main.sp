@@ -1,16 +1,15 @@
-import "src/compile.hsp"
+import <"stdx/string">
 
+import "src/frontend.hsp"
+import "util/command_line/command_line.hsp"
+
+using namespace stdx::string;
+namespace command_line = shadow::util::command_line;
 using namespace shadow;
 
 func int main(int argc, char** argv) {
-	if (argc != 1) {
-		for (int i = 1; i < argc; i++)
-			compile::compile_file(argv[i], true);
-	}
-	else {
-		constexpr unsigned int NUM_SAMPLES = 67;
-		compile::compile_samples(NUM_SAMPLES);
-	}
+	type command_line::command* frontend_spec = frontend::create();
+	type command_line::command_parse_result* input = command_line::parse(frontend_spec, argc, argv);
 
-	return 0;
+	return frontend::process_request(input);
 }

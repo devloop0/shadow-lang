@@ -7,6 +7,7 @@ import "rt/prim_object.hsp"
 import "rt/tup_object.hsp"
 import "rt/row_object.hsp"
 import "rt/fun_object.hsp"
+import "rt/datatyp_object.hsp"
 
 using std::lib::NULL;
 
@@ -22,6 +23,8 @@ func type object* copy_object(type object* o) {
 		return copy_fun(o);
 	case object_kind::ROW:
 		return copy_row(o);
+	case object_kind::DATATYP:
+		return copy_datatyp(o);
 	}
 
 	unreachable("Unrecognized object type!");

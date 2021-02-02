@@ -33,6 +33,10 @@ func[static] type object* int_binop(type object* o1, type object* o2, unsigned i
 	check_int(o2, "Expected an integer rhs for an integer binary operation!");
 
 	int i1 = o1->which.po->which.i, i2 = o2->which.po->which.i, res;
+	if (i2 == 0 && op == int_ops::DIV)
+		runtime_error("Cannot divide by (0: int)!");
+	else if (i2 == 0 && op == int_ops::MOD)
+		runtime_error("Cannot modulo by (0: int)!");
 	switch (op) {
 	case int_ops::ADD: return init_int(i1 + i2);
 	case int_ops::SUB: return init_int(i1 - i2);

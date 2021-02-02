@@ -1,0 +1,11 @@
+val abbrev_to_piece = fn
+	"" => "Pawn"
+	| "N" => "Knight"
+	| "B" => "Bishop"
+	| "R" => "Rook"
+	| "Q" => "Queen"
+	| "K" => "King"
+
+val a2p = abbrev_to_piece
+
+val (p, n, b, r, q, k) = (a2p "", a2p "N", a2p "B", a2p "R", a2p "Q", a2p "K")

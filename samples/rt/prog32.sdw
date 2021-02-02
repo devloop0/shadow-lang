@@ -1,0 +1,8 @@
+datatype `a list = Nil | Cons of `a * `a list
+
+val rec sum = fn l => (case l of
+	Nil => 0
+	| Cons (x, l) => x + sum l
+)
+
+val a = (sum Nil, sum (Cons (1, Cons (-1, Cons (10, Cons (-3, Nil))))))

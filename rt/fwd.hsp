@@ -4,6 +4,7 @@ struct fun_object;
 struct row_object;
 struct prim_object;
 struct tup_object;
+struct datatyp_object;
 struct object;
 
 } } // namespace shadow::rt

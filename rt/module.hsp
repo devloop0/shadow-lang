@@ -1,0 +1,15 @@
+import "../util/symtab.hsp"
+import "fwd.hsp"
+
+namespace shadow { namespace rt {
+
+func type util::symtab* global_module();
+func type util::symtab* init_module_subsystem(
+	type util::symtab* global_scope);
+func type util::symtab* lookup_module(const char* full_name);
+func type util::symtab* module_scope(type util::symtab* mod);
+func type util::symtab* lookup_or_create_module(const char* full_name);
+func type object* lookup_name(const char* curr_mod_ctx,
+	type util::symtab* scope, unsigned int num, ...);
+
+} } // namespace shadow::rt

@@ -1,5 +1,5 @@
 ---------------------------------------------------
-File name: samples/tck/prog67.sdw
+File name: prog67.sdw
 f = (int -> char)
 g = ((`$10 * (`$10 list)) -> `$7)
 h = ((char list) -> (int -> `$23))
@@ -8,15 +8,15 @@ i = (int -> `$35)
 j = (unit -> `$44)
 k = (int -> `$49)
 l = ((char list) -> (int -> `$53))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog66.sdw
+File name: prog66.sdw
 piece2string = (chess_piece -> string)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog65.sdw
+File name: prog65.sdw
 take = (int -> ((`$6 list) -> (`$6 list)))
 replicate = (int -> (`$30 -> (`$30 list)))
 head = ((`$45 list) -> `$45)
@@ -25,10 +25,10 @@ tail = ((`$68 list) -> (`$68 list))
 init = ((`$78 list) -> (`$78 list))
 drop = (int -> ((`$106 list) -> (`$106 list)))
 dropWhile = ((`$121 -> bool) -> ((`$121 list) -> (`$121 list)))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog64.sdw
+File name: prog64.sdw
 foldr = (((`$13 * `$6) -> `$6) -> (`$6 -> ((`$13 list) -> `$6)))
 foldl = (((`$31 * `$38) -> `$31) -> (`$31 -> ((`$38 list) -> `$31)))
 max = (((`$62 * `$62) -> bool) -> ((`$62 list) -> ((string, `$62) either)))
@@ -37,75 +37,75 @@ all = ((`$158 -> bool) -> ((`$158 list) -> bool))
 any = ((`$177 -> bool) -> ((`$177 list) -> bool))
 map = ((`$197 -> `$195) -> ((`$197 list) -> (`$195 list)))
 filter = ((`$219 -> bool) -> ((`$219 list) -> (`$219 list)))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog63.sdw
+File name: prog63.sdw
 s1 = ((alphabet list) -> bool)
 s2 = ((alphabet list) -> bool)
 s3 = ((alphabet list) -> bool)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog62.sdw
+File name: prog62.sdw
 f = ({x : int, y : int} -> int)
 g = ((`$10 * `$10) -> string)
 h = (((`$22 * `$23) * `$20) -> ((`$22 * `$23) * (`$22 * `$22)))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog61.sdw
+File name: prog61.sdw
 init_cart = (unit -> ((item * int) list))
 add_to_cart = ((((item * int) list) * item) -> ((item * int) list))
 remove_from_cart = ((((item * int) list) * item) -> ((item * int) list))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog60.sdw
+File name: prog60.sdw
 f = ((int option) -> (int option))
 g = ((int option2) -> (int option2))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog59.sdw
+File name: prog59.sdw
 degree = (({V : ((`$3 * int) list), E : ((int * int) list)} * int) -> int)
 select_vertices = (({V : ((`$41 * int) list), E : ((int * int) list)} * (int list)) -> (`$41 list))
 neighbors = (({V : ((`$117 * int) list), E : ((int * int) list)} * int) -> (`$117 list))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog58.sdw
+File name: prog58.sdw
 initial_levels = (class -> ((stat * int) list))
 level_up = ((((stat * int) list) * stat) -> ((stat * int) list))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog57.sdw
+File name: prog57.sdw
 map = ((`$33 -> (`$11 * `$12)) -> ((((`$15, (`$15 -> `$33)) tuplist) -> ((`$15, (`$15 -> `$33)) tuplist)) -> (((`$15, (`$15 -> `$33)) tuplist) -> ((`$11, `$12) tuplist))))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog56.sdw
+File name: prog56.sdw
 quadratic = ({a : real, b : real, c : real} -> (real -> real))
 f = (real -> real)
 g = (real -> real)
 f_g = (real -> real)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog55.sdw
+File name: prog55.sdw
 t1 = (((`$3 * `$2) -> `$9) -> (`$3 -> (`$2 -> `$9)))
 t2 = (((`$16 * `$16) -> `$22) -> (`$16 -> (`$16 -> `$22)))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog54.sdw
+File name: prog54.sdw
 append = (((`$15 list) * `$15) -> (`$15 list))
 hanoi = (int -> ((int * rod * rod) list))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog53.sdw
+File name: prog53.sdw
 outcome_to_string = (outcome -> string)
 winner = ((choice * choice) -> outcome)
 play = ((choice * choice) -> string)
@@ -113,35 +113,35 @@ string_to_choice = (string -> choice)
 c1 = choice
 c2 = choice
 result = string
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog52.sdw
+File name: prog52.sdw
 l2norm_2d = ({x : real, y : real} -> real)
 l2norm_3d = ({x : real, y : real, z : real} -> real)
 dist1 = real
 dist2 = real
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog51.sdw
+File name: prog51.sdw
 f = ({y : `$7, x : `$7} -> `$7)
 g = char
 h = ({x : int, y : int} -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog50.sdw
+File name: prog50.sdw
 map = ((`$9 -> `$7) -> ((`$9 list) -> (`$7 list)))
 to_points = ((`$28 list) -> ({x : `$28, y : `$28} list))
 xs = (int list)
 xs2 = ({x : int, y : int} list)
 y_x = ({x : int, y : int} list)
 _4d = ({x : {x : int, y : int}, y : {x : int, y : int}} list)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog49.sdw
+File name: prog49.sdw
 add = (({x : int, y : int} * {x : int, y : int}) -> {x : int, y : int})
 neg = ({x : int, y : int} -> {x : int, y : int})
 sub = (({x : int, y : int} * {x : int, y : int}) -> {x : int, y : int})
@@ -151,325 +151,325 @@ pow = ((int * int) -> int)
 lnorm = (({x : int, y : int} * int) -> int)
 l2norm = ({x : int, y : int} -> int)
 l1norm = ({x : int, y : int} -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog48.sdw
+File name: prog48.sdw
 f = ({x : int} -> {x : int, y : int})
 g = ({x : char} -> char)
 h = ({x : bool, y : int} -> (int * bool))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog47.sdw
+File name: prog47.sdw
 iterate = ((`$14 -> bool) -> ((`$14 -> `$11) -> ((`$14 list) -> (`$11 list))))
 map = ((`$47 -> `$48) -> ((`$47 list) -> (`$48 list)))
 is_valid = (((`$55, `$56) either) -> bool)
 identity = (`$60 -> `$60)
 only_valid = ((((`$69, `$70) either) list) -> (((`$69, `$70) either) list))
 unwrap_either = ((((`$79, `$85) either) list) -> (`$79 list))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog46.sdw
+File name: prog46.sdw
 iterate = ((`$13 -> bool) -> ((`$13 -> `$10) -> ((`$13 list) -> (`$10 list))))
 map = ((`$43 -> `$44) -> ((`$43 list) -> (`$44 list)))
 wrap = ((`$51 list) -> ((`$51 option) list))
 unwrap = (((`$66 option) list) -> (`$66 list))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog45.sdw
+File name: prog45.sdw
 x = bool
 f = (`$9 -> int)
 g = (int -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog44.sdw
+File name: prog44.sdw
 num_nodes = ((`$6 binary_tree) -> int)
 append = ((`$19 list) -> (`$19 -> (`$19 list)))
 extend = ((`$50 list) -> ((`$50 list) -> (`$50 list)))
 in_order = ((`$69 binary_tree) -> (`$69 list))
 x = char
 y = bool
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog43.sdw
+File name: prog43.sdw
 option2either = ((`$14 option) -> (`$8 -> ((`$8, `$14) either)))
 either2option = (((`$27, `$28) either) -> (`$28 option))
 o = (int option)
 e = ((`$46, char) either)
 test1 = (int option)
 test2 = ((string, char) either)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog42.sdw
+File name: prog42.sdw
 safe_div = (real -> (real -> ((string, real) either)))
 iteration = ((`$19 -> ((`$19, `$28) either)) -> (`$19 -> `$28))
 fwd = ((`$42 option) -> ((`$42 -> ((string, `$52) either)) -> ((string, `$52) either)))
 test = ((string, real) either)
 base_check = ((string -> (char option)) -> (string -> ((string, int) either)))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog41.sdw
+File name: prog41.sdw
 map = (((`$13 -> `$9) * (`$13 list)) -> (`$9 list))
 reduce = (((((`$36 option) * (`$36 option)) -> (`$36 option)) * (`$36 list)) -> (`$36 option))
 reduce2 = (((`$76 * `$69) -> `$69) -> ((`$76 list) -> (`$69 -> `$69)))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog40.sdw
+File name: prog40.sdw
 filter = ((`$7 -> bool) -> ((`$7 list) -> (`$7 list)))
 len = ((`$34 list) -> int)
 mylist = (int list)
 newlen = int
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog39.sdw
+File name: prog39.sdw
 eval_expr = (expr -> int)
 eval_boolexpr = (boolexpr -> bool)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog38.sdw
+File name: prog38.sdw
 char_tree = (char binary_tree)
 int_tree = (int binary_tree)
 num_nodes = ((`$47 binary_tree) -> int)
 count_char = int
 count_int = int
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog37.sdw
+File name: prog37.sdw
 concat = ((`$7 list) -> ((`$7 list) -> (`$7 list)))
 to_list = ((`$28 binary_tree) -> (`$28 list))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog36.sdw
+File name: prog36.sdw
 size_tree = ((`$16 tree) -> int)
 size_forest = ((`$16 forest) -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog35.sdw
+File name: prog35.sdw
 unwrap = (((`$6 option) list) -> (`$6 list))
 wrap = ((`$30 list) -> ((`$30 option) list))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog34.sdw
+File name: prog34.sdw
 haar = ((int List) -> (int List))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog33.sdw
+File name: prog33.sdw
 list_rev = ((`$12 list) -> (`$12 list))
 merge = (((`$48 * `$48) -> bool) -> (((`$48 list) * (`$48 list)) -> (`$48 list)))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog32.sdw
+File name: prog32.sdw
 rotate_clockwise = (direction -> direction)
 rotate_counterclockwise = (direction -> direction)
 rotate_all = ((direction list) -> (rotation -> (direction list)))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog31.sdw
+File name: prog31.sdw
 suit_to_string = (suit -> string)
 kind_to_string = (kind -> string)
 card_to_string = (card -> string)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog30.sdw
+File name: prog30.sdw
 id = (int -> int)
 fact = (int -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog29.sdw
+File name: prog29.sdw
 evenlength = ((`$15 evenlist) -> int)
 oddlength = ((`$15 oddlist) -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog28.sdw
+File name: prog28.sdw
 f = (int_exp -> (int_term -> int_term))
 g = (int_term -> ((int_factor * int_factor) -> (int_factor -> (int_exp -> int_exp))))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog27.sdw
+File name: prog27.sdw
 f = ((int List) -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog26.sdw
+File name: prog26.sdw
 apply_twice = ((`$2 -> `$2) -> (`$2 -> `$2))
 double = (int -> int)
 square = (real -> real)
 quad = (int -> int)
 fourth = (real -> real)
 fourth2 = (int -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog25.sdw
+File name: prog25.sdw
 x = int
 y = bool
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog24.sdw
+File name: prog24.sdw
 reduce = (((`$11 * `$4) -> `$4) -> ((`$11 List) -> (`$4 -> `$4)))
 map = ((`$35 -> `$33) -> ((`$35 List) -> (`$33 List)))
 length = ((`$55 List) -> int)
 unwrap = (((`$65 Option) List) -> (`$65 List))
 filter = ((`$85 -> bool) -> ((`$85 List) -> (`$85 List)))
 foldr = (((`$118 * `$111) -> `$111) -> (`$111 -> ((`$118 List) -> `$111)))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog23.sdw
+File name: prog23.sdw
 f = (int -> (int IntList))
 g = (int -> (`$15 -> (`$15 IntList)))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog22.sdw
+File name: prog22.sdw
 length = ((`$5 List) -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog21.sdw
+File name: prog21.sdw
 f = (`$3 -> (`$3 List))
 g = (`$18 -> (`$18 List))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog20.sdw
+File name: prog20.sdw
 f = (((`$5 Option) Option) -> (`$5 Option))
 g = ((`$14 Option) -> (`$14 Option))
 h = (((`$28 Option) Option) -> (`$28 Option))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog19.sdw
+File name: prog19.sdw
 f = (int -> (int Option))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog18.sdw
+File name: prog18.sdw
 f = (int -> ((char Option) * int))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog17.sdw
+File name: prog17.sdw
 f = ((`$3 * (int * char * `$7)) -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog16.sdw
-Return Value: 0
+File name: prog16.sdw
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog15.sdw
+File name: prog15.sdw
 f = (`$4 -> ((`$11 * `$4) -> `$4))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog14.sdw
+File name: prog14.sdw
 f = (int -> (int -> int))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog13.sdw
+File name: prog13.sdw
 int_to_real = (int -> real)
 fact = (int -> real)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog12.sdw
+File name: prog12.sdw
 f = (`$3 -> (`$2 -> (`$3 * `$2)))
 g = (`$10 -> (`$10 * bool))
 h = ((`$20 -> (char -> `$26)) -> (`$20 -> (`$27 -> (`$26 * `$27))))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog11.sdw
+File name: prog11.sdw
 f = (unit -> (int * bool))
 g = (unit -> bool)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog10.sdw
+File name: prog10.sdw
 f = ((int * real) -> real)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog9.sdw
+File name: prog09.sdw
 f = (`$2 -> (`$2 -> `$2))
 int_to_real = (int -> real)
 string_to_real = (string -> real)
 real_to_int = (real -> int)
 test = (int -> (string -> int))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog8.sdw
+File name: prog08.sdw
 id = (`$8 -> `$8)
 id2 = (`$8 -> `$8)
 f = (unit -> bool)
 g = (unit -> bool)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog7.sdw
+File name: prog07.sdw
 even = (int -> bool)
 odd = (int -> bool)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog6.sdw
+File name: prog06.sdw
 g = (int -> (int -> int))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog5.sdw
+File name: prog05.sdw
 fact = (int -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog4.sdw
+File name: prog04.sdw
 map = ((`$5 -> `$5) -> (`$5 -> (`$4 -> `$4)))
 id = (`$20 -> `$20)
 not_id = (`$24 -> int)
 f = (unit -> char)
 g = (unit -> real)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog3.sdw
+File name: prog03.sdw
 id = (`$2 -> `$2)
 f = (char -> char)
 g = (unit -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog2.sdw
+File name: prog02.sdw
 f = (`$7 -> (`$6 -> (`$7 -> `$6)))
 m = ((`$16 -> `$16) -> (`$16 -> `$16))
-Return Value: 0
+Return value: 0
 ---------------------------------------------------
 ---------------------------------------------------
-File name: samples/tck/prog1.sdw
+File name: prog01.sdw
 f = (((int * char) -> (((int * char) * string) -> (bool * (char * real)))) -> int)
-Return Value: 0
+Return value: 0
 ---------------------------------------------------

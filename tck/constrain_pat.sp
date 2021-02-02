@@ -32,7 +32,7 @@ func bool constrain_pat(type env* e, type ast::pat* p, type ast::typ* s) {
 			"Expected at least one identifier for an identifier pattern!");
 
 		byte* datatyp_constructor_lookup = lookup_long_datatyp_constructor_ident(e, idents);
-		type lex::token* ident = vector::at(idents, 0) as type lex::token** @;
+		type lex::token* err_ident = get_non_null_token(idents);
 		if (datatyp_constructor_lookup != NULL) {
 			type ast::typ* t_dtc = datatyp_constructor_lookup as type ast::typ** @;
 			util::maybe_report_ice(t_dtc->kind == ast::typ_kind::CONSTRUCTOR
@@ -40,7 +40,7 @@ func bool constrain_pat(type env* e, type ast::pat* p, type ast::typ* s) {
 				"Expected a constructor or function for a datatype constructor symbol!");
 
 			if (t_dtc->kind != ast::typ_kind::CONSTRUCTOR) {
-				util::report_token_error(util::error_kind::ERR, e->par->buf, ident,
+				util::report_token_error(util::error_kind::ERR, e->par->buf, err_ident,
 					"Expected a nullary constructor to match this pattern.");
 				return false;
 			}
@@ -258,9 +258,9 @@ func bool constrain_pat(type env* e, type ast::pat* p, type ast::typ* s) {
 		type ast::pat_construction* pc = p->which.pc;
 
 		byte* datatyp_constructor_lookup = lookup_long_datatyp_constructor_ident(e, pc->idents);
-		type lex::token* first = vector::at(pc->idents, 0) as type lex::token** @;
+		type lex::token* err_first = get_non_null_token(pc->idents);
 		if (datatyp_constructor_lookup == NULL) {
-			util::report_token_error(util::error_kind::ERR, e->par->buf, first,
+			util::report_token_error(util::error_kind::ERR, e->par->buf, err_first,
 				"The symbol given was either not found or was not a datatype constructor.");
 			return false;
 		}
@@ -271,7 +271,7 @@ func bool constrain_pat(type env* e, type ast::pat* p, type ast::typ* s) {
 			"Expected a constructor or a function from a datatype constructor symbol!");
 
 		if (t_dtc->kind != ast::typ_kind::FUN) {
-			util::report_token_error(util::error_kind::ERR, e->par->buf, first,
+			util::report_token_error(util::error_kind::ERR, e->par->buf, err_first,
 				"Expected a non-nullary datatype constructor for a construction pattern.");
 			return false;
 		}

@@ -11,9 +11,12 @@ struct buffer {
 
 	unsigned int col_num;
 	unsigned int line_num;
+
+	bool allow_dollar_sign;
 }
 
-func void init_buffer(type buffer* buf, char* file_name, char* text);
+func void init_buffer(type buffer* buf, char* file_name, char* text,
+	bool allow_dollar_sign);
 func bool skip_whitespace(type buffer* buf);
 func bool skip_comment(type buffer* buf);
 func void advance_char(type buffer* buf);

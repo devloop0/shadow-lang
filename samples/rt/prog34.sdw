@@ -1,0 +1,11 @@
+datatype `a option = None | Some of `a
+val s = Some
+fun f (Some x) = x
+fun g 2 = 23
+	| g x = x + 1
+val z = (g 2, .g 3)
+val zz = .f (Some 'a')
+
+val x = 2
+val zzz = (let val x = 3 in (x - .x, .x - x) end)
+val zzzz = (s 2, Some 2, None)

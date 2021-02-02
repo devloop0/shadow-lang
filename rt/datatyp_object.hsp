@@ -1,0 +1,14 @@
+import "fwd.hsp"
+
+namespace shadow { namespace rt {
+
+struct datatyp_object {
+	char* name;
+	type object* data;
+}
+
+func type object* copy_datatyp(type object* obj);
+
+func type object* init_datatyp(char* name, type object* obj);
+
+} } // namespace shadow::rt

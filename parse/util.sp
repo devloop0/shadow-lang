@@ -1,5 +1,6 @@
 import "parse/util.hsp"
 
+import <"std/lib">
 import <"std/io">
 import <"stdx/vector">
 
@@ -7,6 +8,7 @@ import "util/error.hsp"
 import "parse/parse.hsp"
 import "lex/token.hsp"
 
+using std::lib::NULL;
 using std::io::printf;
 using namespace stdx::vector;
 
@@ -85,6 +87,20 @@ func type vector::vector* parse_maybe_long_ident(type parser* p) {
 		sizeof{type lex::token*});
 
 	type lex::token* ptok = peek(p);
+	if (ptok->tok_type == lex::tokens::DOT) {
+		type lex::token* global = NULL as type lex::token*;
+		util::maybe_report_ice(!vector::append(idents, global$ as byte*) as bool,
+			"Could not append the 'global' identifier to the identifier-list!");
+		pop(p);
+		ptok = peek(p);
+	}
+
+	if (ptok->tok_type != lex::tokens::IDENT) {
+		util::report_token_error(util::error_kind::ERR, p->buf, ptok,
+			"Expected at least on identifier here!");
+		return idents;
+	}
+		
 	while (ptok->tok_type == lex::tokens::IDENT) {
 		pop(p);
 

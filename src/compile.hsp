@@ -1,7 +1,100 @@
+import <"stdx/vector">
+import <"stdx/string">
+
+import "../tck/env.hsp"
+import "../util/symtab.hsp"
+
 namespace shadow { namespace compile {
 
-func int compile_file(char* file_name, bool print);
+static const char* MOD_FILE_EXT = "mod";
+static const char* MOD_FILE_SEP = "@";
+static const char* MOD_DATA_SEP = "$";
+static const char* MOD_SDW_CFG = "mod.sdw_cfg";
 
-func int compile_samples(unsigned int num_files);
+static const char* GLOBAL_MOD_DIR = "/usr/include/libshadow/mod";
+static const char* GLOBAL_SRC_DIR = "/usr/include/libshadow/src";
+static const char* GLOBAL_LIB_DIR = "/usr/include/libshadow/lib";
+
+static const char* GLOBAL_SPECTRE_DIR = "/usr/include/libspectre";
+static const char* GLOBAL_SHADOW_RT_DIR = "/home/artoria/shadow/rt_build";
+
+static const char* CFG_VISIBILITY_HEADER = "@visibility",
+	CFG_SRC_VISIBILITY_HEADER = "@src_visibility",
+	CFG_SP_RESOURCES_HEADER = "@sp_resources";
+
+static const char* MOD_NAME_HEADER = "@name",
+	MOD_NAMESPACES_HEADER = "@namespaces",
+	MOD_TYPES_HEADER = "@types",
+	MOD_SYMBOLS_HEADER = "@symbols",
+	MOD_DATATYPES_HEADER = "@datatypes",
+	MOD_DATATYPE_CONSTRUCTORS_HEADER = "@datatype_constructors",
+	MOD_VISIBILITY_HEADER = "@visibility",
+	MOD_SUBMODULES_HEADER = "@submodules",
+	MOD_IMPORTED_MODULES_HEADER = "@imported_modules";
+
+namespace stage_kind {
+
+static constexpr unsigned int PARSE = 0x0,
+	TCK = 0x1,
+	CGEN = 0x2;
+
+} // namespace stage_kind
+
+struct compile_options {
+	bool rt_debug, add_entry_point, to_stdout, verbose;
+	unsigned int stop_stage;
+	type stdx::string::string::string* namespace_name;
+	type tck::module* module_context;
+}
+
+struct compile_output {
+	bool success;
+	type stdx::vector::vector::vector* output;
+}
+
+struct module_file_output {
+	type stdx::string::string::string* file_name;
+	type stdx::string::string::string* namespace_name;
+	type stdx::vector::vector::vector* output;
+}
+
+struct module_config {
+	bool visibility;
+	bool src_visibility;
+	type stdx::vector::vector::vector* sp_resources;
+}
+
+struct compile_module_output {
+	bool success;
+	type module_config* module_cfg;
+	type stdx::string::string::string* module_name;
+	type stdx::string::string::string* module_root;
+	type tck::module* module_context;
+	type stdx::vector::vector::vector* output;
+}
+
+func type compile_output* compile_file(char* file_name, type compile_options* copts);
+func type stdx::vector::vector::vector* compile_module(
+	char* module_root, type compile_options* copts);
+func void gen_mod_info(type stdx::string::string::string* header_name, type tck::env* e,
+	type util::symtab* st, type stdx::vector::vector::vector* ret);
+func bool cleanup_module_outputs(type stdx::vector::vector::vector* outputs);
+func bool write_module_output(const char* output_dir,
+	type stdx::vector::vector::vector* outputs);
+
+func type util::symtab* parse_metadata_file(const char* path);
+func bool extract_metadata_bool(type stdx::vector::vector::vector* vals, bool* res);
+func type tck::module* parse_module_metadata(type stdx::vector::vector::vector* module_name,
+	type tck::module* module_context);
+
+func type module_config* parse_module_config(const char* module_root,
+	const char* module_name);
+func type stdx::vector::vector::vector* gen_mod_compile_script(
+	const char* output_dir, type stdx::vector::vector::vector* outputs);
+func type stdx::vector::vector::vector* gen_file_compile_script(
+	const char* output_file, type tck::module* m);
+
+func void write_module_metadata(type compile_module_output* cout,
+	type compile_options* copts);
 
 } } // namespace shadow::compile

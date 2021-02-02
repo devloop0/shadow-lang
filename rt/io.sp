@@ -10,6 +10,7 @@ import "rt/fun_object.hsp"
 import "rt/prim_object.hsp"
 import "rt/tup_object.hsp"
 import "rt/row_object.hsp"
+import "rt/datatyp_object.hsp"
 
 using std::lib::NULL;
 using std::io::printf;
@@ -65,7 +66,7 @@ func[static] int print_helper(type object* obj, bool d) {
 	}
 		break;
 	case object_kind::FUN: {
-		ret += printf("[fn 0x%p]", obj->which.fo->fun);
+		ret += printf("[fun]");
 	}
 		break;
 	case object_kind::ROW: {
@@ -82,6 +83,24 @@ func[static] int print_helper(type object* obj, bool d) {
 			if (i != vector::size(row->keys) - 1) ret += printf(", ");
 		}
 		ret += printf("}");
+	}
+		break;
+	case object_kind::DATATYP: {
+		type datatyp_object* dto = obj->which.dto;
+
+		if (dto->data == NULL as type rt::object*)
+			ret += printf("%s", dto->name);
+		else {
+			ret += printf("%s ", dto->name);
+			if (dto->data->kind == rt::object_kind::TUP) {
+				ret += print_helper(dto->data, d);
+			}
+			else {
+				ret += printf("(");
+				ret += print_helper(dto->data, d);
+				ret += printf(")");
+			}
+		}
 	}
 		break;
 	default:

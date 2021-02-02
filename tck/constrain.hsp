@@ -1,11 +1,20 @@
+import <"stdx/vector">
+
 import "../ast/ast.hsp"
 import "env.hsp"
 
 namespace shadow { namespace tck {
 
-func bool constrain_prog(type env* e, type ast::prog* p);
+func type prog_status* constrain_prog(type module* module_context, type parse::parser* pr, type ast::prog* p, bool verbose);
 func bool constrain_decl(type env* e, type ast::decl* d, bool u);
 func bool constrain_pat(type env* e, type ast::pat* p, type ast::typ* s);
 func bool constrain_exp(type env* e, type ast::exp* x, type ast::typ* s);
+
+func bool constrain_val_decl(type env* e, type ast::val_decl* vd, bool u);
+func bool constrain_datatyp_repl_decl(type env* e, type ast::datatyp_repl_decl* drd, bool u);
+func bool constrain_typ_decls(type env* e, type stdx::vector::vector::vector* typ_decls, bool u);
+func bool constrain_datatyp_decls(type env* e, type stdx::vector::vector::vector* dataty_decls, bool u);
+
+func bool handle_mod_import(type env* e, type ast::mod_import* mi);
 
 } } // namespace shadow::tck

@@ -1,0 +1,6 @@
+val f = fn _ => ()
+val g = fn _ => ()
+val h = f
+
+val x = f = f andalso f = h
+val y = f = g orelse g = h

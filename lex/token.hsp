@@ -57,7 +57,7 @@ constexpr unsigned int
 	OF = 0x4a,
 	MATCH_ARROW = 0x4b,
 	FUN_ARROW = 0x4c,
-	MODULE = 0x4d,
+	IMPORT = 0x4d,
 	SIG = 0x4e,
 	DATATYPE = 0x4f,
 	DOUBLE_COLON = 0x50,
@@ -85,15 +85,19 @@ constexpr unsigned int
 	ORELSE = 0x66,
 	PLUS_PLUS = 0x67,
 	AS = 0x68,
-	EFUN = 0x69;
+	EFUN = 0x69,
+	DOLLAR_SIGN = 0x6a;
 
 } // namespace tokens
+
+struct buffer;
 
 struct token {
 	unsigned int line_num;
 	unsigned int start_col, start_pos;
 	unsigned int end_col, end_pos;
 	unsigned int tok_type;
+	type buffer* buf_ref;
 }
 
 } } // namespace shadow::lex

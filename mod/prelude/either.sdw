@@ -1,0 +1,6 @@
+import datatypes
+
+fun either f g = (fn
+	(datatypes.Left a) => f a
+	| (datatypes.Right b) => g b
+)

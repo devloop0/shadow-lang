@@ -11,8 +11,10 @@ import "lex/token.hsp"
 import "ast/ast.hsp"
 
 using std::io::printf;
+using std::lib::atoi;
 using std::lib::NULL;
 using std::lib::malloc;
+using std::lib::free;
 using std::string::strncpy;
 using namespace stdx::vector;
 
@@ -50,6 +52,28 @@ func[static] type ast::typ* parse_typ_helper1(type parser* p) {
 	case lex::tokens::BACKTICK: {
 		pop(p);
 		ptok = peek(p);
+
+		if (ptok->tok_type == lex::tokens::DOLLAR_SIGN) {
+			pop(p);
+			ptok = peek(p);
+			if (ptok->tok_type != lex::tokens::INT_LITERAL) {
+				util::report_token_error(util::error_kind::ERR, p->buf,
+					ptok, "Typechecker variables need to be of the form `$<INT>.");
+				return NULL as type ast::typ*;
+			}
+
+			pop(p);
+			t->kind = ast::typ_kind::TCK_VAR;
+
+			unsigned int tok_length = ptok->end_pos - ptok->start_pos;
+			char* str = malloc(tok_length + 1) as char*;
+			strncpy(str, ptok->buf_ref->text[ptok->start_pos]$, tok_length);
+			str[tok_length] = 0;
+			t->which.tck_var = atoi(str);
+			free(str as byte*);
+			break;
+		}
+
 		if (ptok->tok_type != lex::tokens::IDENT) {
 			util::report_token_error(util::error_kind::ERR, p->buf,
 				ptok, "Expected an identifier after a backtick (`) declaring "
@@ -61,6 +85,7 @@ func[static] type ast::typ* parse_typ_helper1(type parser* p) {
 		t->which.var = ptok;
 	}
 		break;
+	case lex::tokens::DOT:
 	case lex::tokens::IDENT: {
 		type vector::vector* idents = parse_maybe_long_ident(p);
 		type ast::typ_constructor* tc = malloc(sizeof{type ast::typ_constructor})
@@ -201,7 +226,7 @@ func[static] type ast::typ* parse_typ_helper2(type parser* p) {
 	else default_ret = NULL as type ast::typ*;
 
 	ptok = peek(p);
-	if (ptok->tok_type != lex::tokens::IDENT)
+	if (ptok->tok_type != lex::tokens::IDENT && ptok->tok_type != lex::tokens::DOT)
 		return default_ret;
 
 	type vector::vector* ident = parse_maybe_long_ident(p);
@@ -215,7 +240,7 @@ func[static] type ast::typ* parse_typ_helper2(type parser* p) {
 	ret->which.tc = tc;
 
 	ptok = peek(p);
-	while (ptok->tok_type == lex::tokens::IDENT) {
+	while (ptok->tok_type == lex::tokens::IDENT || ptok->tok_type == lex::tokens::DOT) {
 		type vector::vector* typs = vector::new_vector(sizeof{type ast::typ*});
 		util::maybe_report_ice(!vector::append(typs, ret$ as byte*) as bool,
 			"Could not append type to type constructor list!");

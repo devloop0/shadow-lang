@@ -1,0 +1,10 @@
+import "command_line.hsp"
+
+import <"stdx/vector">
+
+namespace shadow { namespace util { namespace command_line {
+
+func bool validate_command(type command* c);
+func bool argument_list_has_positional(type stdx::vector::vector::vector* arguments);
+
+} } } // namespace shadow::util::command_line

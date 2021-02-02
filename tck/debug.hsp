@@ -1,10 +1,18 @@
+import <"stdx/string">
+import <"stdx/vector">
+
 import "env.hsp"
 import "../ast/ast.hsp"
 import "../util/symtab.hsp"
 
 namespace shadow { namespace tck {
 
+func void gen_tck_symbols(type env* e, type util::symtab* st,
+	type stdx::vector::vector::vector* outputs, bool fully_qualified);
 func void print_typ(type env* e, type ast::typ* t);
+func type stdx::string::string::string* typ_2_string(type env* e, type ast::typ* t,
+	bool fully_qualified);
+
 func void print_env_symtab(type env* e, type util::symtab* s);
 func void print_env_scope(type env* e, type scope* s);
 func void print_tck_ctx(type env* e);

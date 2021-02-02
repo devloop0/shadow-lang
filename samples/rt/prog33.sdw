@@ -1,0 +1,8 @@
+datatype `a list = Nil | Cons of `a * `a list
+
+fun map Nil f = Nil
+	| map (Cons (x, l)) f = Cons (f x, map l f)
+
+val (myfun1, myfun2) = (fn x => x + 1, fn x => x + 2)
+val (a, b) = (map (Cons (1, Cons (2, Nil))) myfun1, map (Cons (-5, Cons (-4, Cons (-3, Nil)))) myfun2)
+

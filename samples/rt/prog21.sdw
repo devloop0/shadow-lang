@@ -1,0 +1,3 @@
+val x = true orelse 1 / 0 = 0
+val y = false andalso 1 % 0 = 0
+val z = true orelse 1.0 /. 0.0 = 0.0

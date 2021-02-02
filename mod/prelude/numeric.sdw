@@ -1,0 +1,17 @@
+fun succ a = a + 1
+fun pred a = a - 1
+fun rsucc a = a +. 1.0
+fun rpred a = a -. 1.0
+
+fun negate a = -a
+fun rnegate a = -.a
+fun abs a = if a < 0 then -a else a
+fun rabs a = if a <. 0. then -.a else a
+fun signum a = if a > 0 then 1 else if a = 0 then 0 else -1
+fun rsignum a = if a >. 0. then 1. else if a = 0. then 0. else -.1.
+
+fun even a = a % 2 = 0
+fun odd a = a % 2 != 0
+fun subtract a b = a - b
+fun rsubtract a b = a -. b
+fun gcd a b = if b = 0 then a else gcd b (a % b)

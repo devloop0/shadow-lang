@@ -1,0 +1,6 @@
+datatype `a list = Nil | Cons of `a * `a list
+
+val (x, y) = (Cons (1, Cons (2, Nil)), Cons (4, Cons (5, Cons (6, Nil))))
+val rec map = fn f => (fn Nil => Nil | Cons (x, l) => Cons (f x, map f l))
+val special_map = map (fn x => x + 1)
+val (a, b) = (special_map x, special_map y)

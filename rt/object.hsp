@@ -9,7 +9,8 @@ namespace object_kind {
 constexpr unsigned int PRIM = 0x0,
 	TUP = 0x1,
 	FUN = 0x2,
-	ROW = 0x3;
+	ROW = 0x3,
+	DATATYP = 0x4;
 
 } // namespace object_kind
 
@@ -18,6 +19,7 @@ union object_types {
 	type prim_object* po;
 	type stdx::vector::vector::vector* tup;
 	type fun_object* fo;
+	type datatyp_object* dto;
 }
 
 struct object {

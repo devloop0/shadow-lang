@@ -1,0 +1,8 @@
+import "../util/command_line/command_line.hsp"
+
+namespace shadow { namespace frontend {
+
+func type util::command_line::command* create();
+func int process_request(type util::command_line::command_parse_result* cpr);
+
+} } // namespace shadow::frontend

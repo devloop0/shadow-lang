@@ -245,6 +245,7 @@ func[static] type ast::exp* parse_exp_helper1(type parser* p) {
 		pop(p);
 	}
 		break;
+	case lex::tokens::DOT:
 	case lex::tokens::IDENT: {
 		type vector::vector* ident = parse_maybe_long_ident(p);
 		e->kind = ast::exp_kind::IDENT;

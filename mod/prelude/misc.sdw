@@ -1,0 +1,4 @@
+fun id a = a
+fun const a b = a
+fun compose f g a = f (g a)
+fun flip f b a = f a b

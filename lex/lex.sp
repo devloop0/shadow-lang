@@ -18,7 +18,8 @@ func void advance_char(type buffer* buf) {
 	buf->col_num++;
 }
 
-func void init_buffer(type buffer* buf, char* file_name, char* text) {
+func void init_buffer(type buffer* buf, char* file_name, char* text,
+	bool allow_dollar_sign) {
 	buf->text = text;
 	buf->file_name = file_name;
 
@@ -27,6 +28,8 @@ func void init_buffer(type buffer* buf, char* file_name, char* text) {
 
 	buf->line_num = 1;
 	buf->col_num = 1;
+
+	buf->allow_dollar_sign = allow_dollar_sign;
 }
 
 func bool skip_whitespace(type buffer* buf) {
@@ -70,6 +73,7 @@ func type token* lex(type buffer* buf) {
 		tok->start_pos = buf->len;
 		tok->end_pos = buf->len;
 		tok->tok_type = tokens::EOF;
+		tok->buf_ref = buf;
 		return tok;
 	}
 
@@ -90,6 +94,7 @@ func type token* lex(type buffer* buf) {
 		tok->start_pos = buf->len;
 		tok->end_pos = buf->len;
 		tok->tok_type = tokens::EOF;
+		tok->buf_ref = buf;
 		return tok;
 	}
 
@@ -98,6 +103,7 @@ func type token* lex(type buffer* buf) {
 	case '\'': {
 		bool is_char = buf->text[buf->pos] == '\'';
 		type token* tok = malloc(sizeof{type token}) as type token*;
+		tok->buf_ref = buf;
 		tok->tok_type = is_char ? tokens::CHAR_LITERAL : tokens::STRING_LITERAL;
 
 		unsigned int start_pos = buf->pos,
@@ -164,6 +170,7 @@ func type token* lex(type buffer* buf) {
 			}
 
 			type token* tok = malloc(sizeof{type token}) as type token*;
+			tok->buf_ref = buf;
 			tok->tok_type = tokens::INT_LITERAL;
 			tok->line_num = buf->line_num;
 			tok->start_col = start_col;
@@ -196,6 +203,7 @@ func type token* lex(type buffer* buf) {
 				else break;
 			}
 			type token* tok = malloc(sizeof{type token}) as type token*;
+			tok->buf_ref = buf;
 			tok->tok_type = hit_decimal ? tokens::REAL_LITERAL : tokens::INT_LITERAL;
 			tok->line_num = buf->line_num;
 			tok->start_col = start_col;
@@ -211,6 +219,7 @@ func type token* lex(type buffer* buf) {
 	case '/': {
 		char curr = buf->text[buf->pos];
 		type token* tok = malloc(sizeof{type token}) as type token*;
+		tok->buf_ref = buf;
 		tok->line_num = buf->line_num;
 		tok->start_col = buf->col_num;
 		tok->start_pos = buf->pos;
@@ -248,6 +257,7 @@ func type token* lex(type buffer* buf) {
 	case ')':
 	case '{':
 	case '}':
+	case '$':
 	case '`':
 	case ';':
 	case '[':
@@ -257,6 +267,7 @@ func type token* lex(type buffer* buf) {
 		type token* tok = malloc(sizeof{type token}) as type token*;
 
 		switch (buf->text[buf->pos]) {
+		case '$': tok->tok_type = tokens::DOLLAR_SIGN; break;
 		case '%': tok->tok_type = tokens::PERCENT; break;
 		case '[': tok->tok_type = tokens::OPEN_BRACKET; break;
 		case ']': tok->tok_type = tokens::CLOSE_BRACKET; break;
@@ -272,6 +283,10 @@ func type token* lex(type buffer* buf) {
 		case '~': tok->tok_type = tokens::TILDE; break;
 		}
 
+		if (tok->tok_type == tokens::DOLLAR_SIGN && !buf->allow_dollar_sign)
+			break;
+
+		tok->buf_ref = buf;
 		tok->line_num = buf->line_num;
 		tok->start_col = buf->col_num;
 		tok->start_pos = buf->pos;
@@ -287,6 +302,7 @@ func type token* lex(type buffer* buf) {
 	case '|':
 	case '&': {
 		type token* tok = malloc(sizeof{type token}) as type token*;
+		tok->buf_ref = buf;
 		tok->start_pos = buf->pos;
 		tok->start_col = buf->col_num;
 		tok->line_num = buf->line_num;
@@ -321,6 +337,7 @@ func type token* lex(type buffer* buf) {
 	case '=': {
 		char curr = buf->text[buf->pos];
 		type token* tok = malloc(sizeof{type token}) as type token*;
+		tok->buf_ref = buf;
 		tok->start_pos = buf->pos;
 		tok->start_col = buf->col_num;
 		tok->line_num = buf->line_num;
@@ -344,6 +361,7 @@ func type token* lex(type buffer* buf) {
 		break;
 	case '!': {
 		type token* tok = malloc(sizeof{type token}) as type token*;
+		tok->buf_ref = buf;
 		tok->start_pos = buf->pos;
 		tok->start_col = buf->col_num;
 		tok->line_num = buf->line_num;
@@ -366,6 +384,7 @@ func type token* lex(type buffer* buf) {
 		char curr = buf->text[buf->pos];
 
 		type token* tok = malloc(sizeof{type token}) as type token*;
+		tok->buf_ref = buf;
 		tok->start_pos = buf->pos;
 		tok->start_col = buf->col_num;
 		tok->line_num = buf->line_num;
@@ -416,6 +435,7 @@ func type token* lex(type buffer* buf) {
 		if (!isalpha(buf->text[buf->pos]) && buf->text[buf->pos] != '_') break;
 
 		type token* tok = malloc(sizeof{type token}) as type token*;
+		tok->buf_ref = buf;
 		tok->start_pos = buf->pos;
 		tok->start_col = buf->col_num;
 		tok->line_num = buf->line_num;
@@ -437,17 +457,18 @@ func type token* lex(type buffer* buf) {
 		char* start = buf->text[tok->start_pos]$;
 		char** keywords = [
 			"let", "in", "if", "then", "else", "while", "do", "rec", "type",
-			"fun", "struct", "end", "val", "fn", "case", "of", "module",
+			"fun", "struct", "end", "val", "fn", "case", "of", "import", 
 			"sig", "datatype", "unit", "int", "char", "string", "real",
-			"_", "bool", "true", "false", "bitwise_or", "andalso", "orelse", "as", "efun", ""
+			"_", "bool", "true", "false", "bitwise_or", "andalso", "orelse", "as", "efun",
+			""
 		];
 		unsigned int* ids = [
 			tokens::LET, tokens::IN, tokens::IF, tokens::THEN, tokens::ELSE, tokens::WHILE,
 			tokens::DO, tokens::REC, tokens::TYPE, tokens::FUN, tokens::STRUCT, tokens::END,
-			tokens::VAL, tokens::FN, tokens::CASE, tokens::OF, tokens::MODULE, tokens::SIG,
+			tokens::VAL, tokens::FN, tokens::CASE, tokens::OF, tokens::IMPORT, tokens::SIG,
 			tokens::DATATYPE, tokens::UNIT, tokens::INT, tokens::CHAR, tokens::STRING,
 			tokens::REAL, tokens::UNDERSCORE, tokens::BOOL, tokens::TRUE, tokens::FALSE,
-			tokens::BITWISE_OR, tokens::ANDALSO, tokens::ORELSE, tokens::AS, tokens::EFUN
+			tokens::BITWISE_OR, tokens::ANDALSO, tokens::ORELSE, tokens::AS, tokens::EFUN,
 		];
 		for (unsigned int i = 0; strlen(keywords[i]) != 0; i++) {
 			unsigned int keyword_length = strlen(keywords[i]);
@@ -465,6 +486,7 @@ func type token* lex(type buffer* buf) {
 	util::report_error(util::error_kind::ERR, buf, "Illegal character.",
 		buf->col_num, buf->col_num + 1, buf->pos, buf->pos + 1);
 	type token* bad = malloc(sizeof{type token*}) as type token*;
+	bad->buf_ref = buf;
 	bad->line_num = buf->line_num;
 	bad->start_pos = buf->pos;
 	bad->end_pos = buf->pos + 1;

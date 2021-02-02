@@ -1,0 +1,2 @@
+val rec f = fn 0 => 1 | 1 => 2 | n => n - 1
+val (w, x, y, z) = (f (-1), f 0, f 1, f 2)

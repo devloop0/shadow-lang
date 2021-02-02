@@ -1,0 +1,99 @@
+import <"stdx/string">
+import <"stdx/vector">
+
+namespace shadow { namespace util { namespace command_line {
+
+namespace argument_kind {
+
+static constexpr unsigned int FLAG = 0x0,
+	NAMED = 0x1,
+	POSITIONAL = 0x2;
+
+} // namespace argument_kind
+
+struct command_metadata {
+	type stdx::string::string::string* name, version, author, usage;
+}
+
+struct short_name {
+	char short_name;
+	bool present;
+}
+
+struct argument_parse_result {
+	type stdx::string::string::string* long_name;
+	type short_name short_spec;
+	type stdx::vector::vector::vector* data;
+	unsigned int num;
+}
+
+struct subcommand_parse_result {
+	type command_metadata* metadata;
+	type stdx::string::string::string* name;
+	type stdx::vector::vector::vector* argument_results;
+
+	type subcommand_parse_result* next;
+}
+
+struct command_parse_result {
+	type command_metadata* metadata;
+	type subcommand_parse_result* subcommand_result;
+	type stdx::vector::vector::vector* argument_results;
+
+	bool valid;
+}
+
+struct argument {
+	type short_name short_spec;
+	type stdx::string::string::string* long_name;
+
+	bool optional;
+	bool repeatable;
+	unsigned int kind;
+}
+
+struct subcommand {
+	type stdx::string::string::string* name;
+	type command_metadata* metadata;
+
+	type stdx::vector::vector::vector* arguments;
+	type stdx::vector::vector::vector* subcommands;
+}
+
+struct command {
+	type command_metadata* metadata;
+
+	type stdx::vector::vector::vector* arguments;
+	type stdx::vector::vector::vector* subcommands;
+}
+
+func type command_parse_result* parse(type command* c, int argc, char** argv);
+func void print_version(type command_metadata* c);
+func void print_usage(type command_metadata* c);
+func void maybe_print_error_and_usage(type command_metadata* c, type stdx::string::string::string* error);
+
+func type argument* create_argument(
+	char sn, bool sn_present,
+	type stdx::string::string::string* long_name,
+	bool repeatable, unsigned int kind);
+func type stdx::vector::vector::vector* create_arguments(unsigned int num, ...);
+
+func type command_metadata* create_command_metadata(
+	type stdx::string::string::string* name,
+	type stdx::string::string::string* version,
+	type stdx::string::string::string* author,
+	type stdx::string::string::string* usage);
+
+func type subcommand* create_subcommand(
+	type command_metadata* cm,
+	type stdx::string::string::string* name,
+	type stdx::vector::vector::vector* arguments,
+	type stdx::vector::vector::vector* subcommands);
+func type stdx::vector::vector::vector* create_subcommands(unsigned int num, ...);
+
+func type command* create_command(
+	type command_metadata* cm,
+	type stdx::vector::vector::vector* arguments,
+	type stdx::vector::vector::vector* subcommands);
+
+} } } // namespace shadow::util::command_line

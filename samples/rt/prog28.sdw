@@ -1,0 +1,5 @@
+val id = fn x => x
+
+val (t1, t2, t3) = (id 2, id 'c', id "sdlkfjnsdf")
+val t = (t1, t2, t3)
+val tt = id t

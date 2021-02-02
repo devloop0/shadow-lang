@@ -1,0 +1,7 @@
+fun fst (a, b) = a
+
+fun snd (a, b) = b
+
+fun curry f a b = f (a, b)
+
+fun uncurry f (a, b) = f a b

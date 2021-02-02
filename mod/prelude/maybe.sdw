@@ -1,0 +1,6 @@
+import datatypes
+
+fun maybe b f = (fn
+	datatypes.Nothing => b
+	| (datatypes.Just a) => f a
+)

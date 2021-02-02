@@ -1,4 +1,5 @@
 import <"stdx/vector">
+import <"stdx/string">
 
 import "../util/symtab.hsp"
 import "../lex/token.hsp"
@@ -33,5 +34,15 @@ func bool check_feasibility(type env* e, type ast::typ* lhs, type ast::typ* rhs,
 func bool subst_tab_cmp(const byte* a, const byte* b);
 func void init_subst_tab(type util::symtab* s);
 func void destroy_subst_tab(type util::symtab* s);
+
+func type stdx::vector::vector::vector* get_name_from_identifier(
+	type env* e, type stdx::vector::vector::vector* ident);
+func type stdx::vector::vector::vector* to_fully_qualified_name(type env* e,
+	type stdx::vector::vector::vector* name);
+
+func type stdx::string::string::string* extract_module_name(
+	type tck::module* module_context, const char* sep);
+func type lex::token* get_non_null_token(
+	type stdx::vector::vector::vector* ident);
 
 } } // namespace shadow::tck

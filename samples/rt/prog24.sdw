@@ -1,0 +1,4 @@
+val rec even = fn 0 => true | x => odd (x - 1)
+&& odd = fn 0 => false | x => even (x - 1)
+
+val (e100, o100, e99, o99) = (even 100, odd 100, even 99, odd 99)

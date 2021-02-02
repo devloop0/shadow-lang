@@ -3,6 +3,8 @@ import <"stdx/vector">
 namespace shadow { namespace util {
 
 struct symtab {
+	// TODO: need to build a hashmap/hashset data structure (and probably put 
+	// it in stdx/ in the Spectre standard library).
 	type stdx::vector::vector::vector* keys;
 	type stdx::vector::vector::vector* values;
 	fn bool(const byte*, const byte*) cmp;

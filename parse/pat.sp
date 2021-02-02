@@ -41,6 +41,7 @@ func type ast::pat* parse_pat_atomic(type parser* p) {
 		case lex::tokens::FALSE: c->kind = ast::constant_kind::BOOL; break;
 		case lex::tokens::CHAR_LITERAL: c->kind = ast::constant_kind::CHAR; break;
 		}
+		c->which = ptok;
 
 		pat->kind = ast::pat_kind::CONSTANT;
 		pat->which.con = c;
@@ -51,6 +52,7 @@ func type ast::pat* parse_pat_atomic(type parser* p) {
 		pop(p);
 		pat->kind = ast::pat_kind::WILDCARD;
 		break;
+	case lex::tokens::DOT:
 	case lex::tokens::IDENT: {
 		type vector::vector* ident = parse_maybe_long_ident(p);
 		pat->kind = ast::pat_kind::IDENT;
@@ -217,7 +219,7 @@ func type ast::pat* parse_pat_atomic(type parser* p) {
 
 func[static] type ast::pat* parse_pat_helper1(type parser* p) {
 	type lex::token* ptok = peek(p);
-	if (ptok->tok_type == lex::tokens::IDENT) {
+	if (ptok->tok_type == lex::tokens::IDENT || ptok->tok_type == lex::tokens::DOT) {
 		unsigned int orig_pos = p->pos;
 		type vector::vector* idents = parse_maybe_long_ident(p);
 		

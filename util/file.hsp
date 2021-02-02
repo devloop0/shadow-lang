@@ -1,7 +1,36 @@
+import <"stdx/vector">
+import <"stdx/string">
+
 namespace shadow { namespace util {
 
-func char* read_file(char* path);
+static const char* PATH_SEP = "/";
 
-func bool write_file(char* path, char* text);
+func bool file_exists(const char* path);
+
+func char* read_line(int fd);
+
+func type stdx::vector::vector::vector* read_lines(const char* path);
+
+func char* read_file(const char* path);
+
+func bool write_file(const char* path, const char* text);
+
+func bool append_lines(const char* path, 
+	type stdx::vector::vector::vector* lines);
+
+struct dir_entries {
+	type stdx::vector::vector::vector* files,
+		dirs;
+}
+
+func type dir_entries* list_dir(const char* path);
+
+func type stdx::string::string::string* basename(char* path);
+
+func type stdx::string::string::string* path_cat(
+	const char* root, const char* next);
+
+func bool delete_file(const char* path);
+func bool delete_dir(const char* path, bool rec);
 
 } } // namespace shadow::util

@@ -26,6 +26,9 @@ func[static] type object* real_binop(type object* o1, type object* o2, unsigned 
 	check_real(o2, "Expected a real rhs for a real binary operation!");
 
 	double d1 = o1->which.po->which.d, d2 = o2->which.po->which.d;
+	if (d2 == 0. && op == real_ops::DIV) {
+		unreachable("Cannot divide by (0.0: real)!");
+	}
 	switch (op) {
 	case real_ops::ADD: return init_real(d1 + d2);
 	case real_ops::SUB: return init_real(d1 - d2);

@@ -6,9 +6,6 @@ import <"stdx/string">
 
 namespace shadow { namespace cgen {
 
-func type stdx::vector::vector::vector* collect_top_level_pat_idents(
-	type cgen_ctx* c, type ast::pat* p);
-
 func void init_cgen_data(type cgen_data* cd);
 
 func void add_cgen_data(type cgen_data* pcd, type cgen_data* cd,
@@ -33,5 +30,11 @@ func void add_all_strings(type cgen_ctx* c, type stdx::vector::vector::vector* v
 
 func void bind_pat_to_exp(type cgen_ctx* c, type cgen_data* cd,
 	type ast::pat* p);
+func type stdx::string::string::string* compute_pat_match(
+	type cgen_ctx* c, type cgen_data* cd, 
+	type stdx::string::string::string* base_exp, type ast::pat* p);
+
+func type stdx::string::string::string* gen_lookup_string(
+	type cgen_ctx* c, type stdx::vector::vector::vector* idents);
 
 } } // namespace shadow::cgen
